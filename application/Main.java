@@ -11,11 +11,16 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+<<<<<<< HEAD
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 
+=======
+// testing
+// testing jon
+>>>>>>> 5195d0deeb218a830677e11eab7df710ffd33a61
 public class Main extends Application {
 	
 	/*
