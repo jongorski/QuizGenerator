@@ -2,31 +2,31 @@ package application;
 	
 import javafx.application.Application;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
-<<<<<<< HEAD
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 
-=======
-// testing
-// testing jon
->>>>>>> 5195d0deeb218a830677e11eab7df710ffd33a61
 public class Main extends Application {
 	
 	/*
 	 * Create main GUI page
 	 */
-	public Scene MainGUI() {
+	public Scene MainGUI(Stage stage) {
 		
 		VBox vbox = new VBox();
 	    vbox.setAlignment(Pos.CENTER);
@@ -54,6 +54,12 @@ public class Main extends Application {
 		add_q.setStyle("-fx-font-size:15");
 		add_q.setMinSize(150, 60);
 		add_q.setPrefSize(150, 60);
+		Stage add_popup_stage = AddQuestionFormNode.AddQuestion();
+	    add_q.setOnAction(new EventHandler<ActionEvent>() {
+	            @Override public void handle(ActionEvent e) {
+	            	add_popup_stage.show();
+	            }
+	    	});
 		VBox.setMargin(add_q, new Insets(0, 0, 30, 0));
 
 		
@@ -87,26 +93,69 @@ public class Main extends Application {
         
 		return scene;
 	}
-	
-	public Scene AddQuestion() {
-		BorderPane add_question = new BorderPane();
-		Scene scene = new Scene(add_question, 800, 600);
-
+	/*
+	public Stage AddQuestion() {
+		Stage stage = new Stage();
+		stage.setTitle("Add questions");
+		VBox hbox = new VBox();
+	    hbox.setAlignment(Pos.CENTER);
+		Scene pop = new Scene(hbox, 900, 700);
 		
-		return scene;
+		//Enter topic of new question
+		TextField topic = new TextField();
+		topic.setPromptText("Topic of new question");
+		topic.setStyle("-fx-font-size:15");
+		topic.setMinSize(200, 100);
+		topic.setMaxSize(200, 100);
+		topic.setPrefSize(200, 100);
+		VBox.setMargin(topic, new Insets(0, 0, 40, 0));
+		
+		//Enter text of new question
+		TextArea text = new TextArea();
+		text.setPromptText("Text of new question");
+		text.setStyle("-fx-font-size:15");
+		text.setMinSize(300, 200);
+		text.setMaxSize(300, 200);
+		text.setPrefSize(250, 60);
+		VBox.setMargin(text, new Insets(0, 0, 40, 0));
+		
+		//Choose correct answer
+        Integer ans[] = {1, 2, 3, 4, 5};
+        ComboBox<Integer> ans_box = new ComboBox<Integer>(FXCollections
+        		                    .observableArrayList(ans));
+        ans_box.setPromptText("Choose correct answer");
+		ans_box.setStyle("-fx-font-size:15");
+		ans_box.setMinSize(300, 100);
+		ans_box.setMaxSize(300, 100);
+		VBox.setMargin(ans_box, new Insets(20, 0, 20, 0));
+		
+		//Submit question button
+		Button submit = new Button("Submit Question");
+		submit.setStyle("-fx-font-size:15");
+		submit.setPrefSize(150, 60);
+	    submit.setOnAction(new EventHandler<ActionEvent>() {
+	            @Override public void handle(ActionEvent e) {
+	            	stage.close();
+	            }
+	    	});
+		VBox.setMargin(submit, new Insets(50, 0, 10, 0));
+
+		hbox.getChildren().add(topic);
+		hbox.getChildren().add(text);
+		hbox.getChildren().add(ans_box);
+		hbox.getChildren().add(submit);
+
+		stage.setScene(pop);
+		return stage;
 	}
+	*/
 	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
 			//BorderPane root = new BorderPane();
-			Scene scene = MainGUI();
+			Scene scene = MainGUI(primaryStage);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			
-			
-			
-			
-			
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch(Exception e) {
