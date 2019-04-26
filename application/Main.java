@@ -93,62 +93,6 @@ public class Main extends Application {
         
 		return scene;
 	}
-	/*
-	public Stage AddQuestion() {
-		Stage stage = new Stage();
-		stage.setTitle("Add questions");
-		VBox hbox = new VBox();
-	    hbox.setAlignment(Pos.CENTER);
-		Scene pop = new Scene(hbox, 900, 700);
-		
-		//Enter topic of new question
-		TextField topic = new TextField();
-		topic.setPromptText("Topic of new question");
-		topic.setStyle("-fx-font-size:15");
-		topic.setMinSize(200, 100);
-		topic.setMaxSize(200, 100);
-		topic.setPrefSize(200, 100);
-		VBox.setMargin(topic, new Insets(0, 0, 40, 0));
-		
-		//Enter text of new question
-		TextArea text = new TextArea();
-		text.setPromptText("Text of new question");
-		text.setStyle("-fx-font-size:15");
-		text.setMinSize(300, 200);
-		text.setMaxSize(300, 200);
-		text.setPrefSize(250, 60);
-		VBox.setMargin(text, new Insets(0, 0, 40, 0));
-		
-		//Choose correct answer
-        Integer ans[] = {1, 2, 3, 4, 5};
-        ComboBox<Integer> ans_box = new ComboBox<Integer>(FXCollections
-        		                    .observableArrayList(ans));
-        ans_box.setPromptText("Choose correct answer");
-		ans_box.setStyle("-fx-font-size:15");
-		ans_box.setMinSize(300, 100);
-		ans_box.setMaxSize(300, 100);
-		VBox.setMargin(ans_box, new Insets(20, 0, 20, 0));
-		
-		//Submit question button
-		Button submit = new Button("Submit Question");
-		submit.setStyle("-fx-font-size:15");
-		submit.setPrefSize(150, 60);
-	    submit.setOnAction(new EventHandler<ActionEvent>() {
-	            @Override public void handle(ActionEvent e) {
-	            	stage.close();
-	            }
-	    	});
-		VBox.setMargin(submit, new Insets(50, 0, 10, 0));
-
-		hbox.getChildren().add(topic);
-		hbox.getChildren().add(text);
-		hbox.getChildren().add(ans_box);
-		hbox.getChildren().add(submit);
-
-		stage.setScene(pop);
-		return stage;
-	}
-	*/
 	
 	@Override
 	public void start(Stage primaryStage) {
