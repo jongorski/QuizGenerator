@@ -1,2 +1,5 @@
 *.class
 *.*~
+*.png
+*.jar
+*.zip
