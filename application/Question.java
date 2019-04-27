@@ -43,7 +43,7 @@ public class Question {
     return answer;
   }
 
-  public String getMetadator() {
+  public String getMetadata() {
     return metadata;
   }
 

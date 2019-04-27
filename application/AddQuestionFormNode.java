@@ -26,26 +26,29 @@ public class AddQuestionFormNode {
 	 * choice: javafx TextArea where user enters correct answer choice
 	 * img_path: javafx TextArea where user enters path to assoc image
 	 */
-	private static void submit(TextField topic, TextArea text, TextField[] ans,
-			TextField choice, TextField img_path) {
+	public static Question submit(TextField meta, TextField topic, TextArea text, 
+			TextField[] choices, TextField answer, TextField img_path) {
+		String q_meta = meta.getText();
 		String q_topic = topic.getText();
 		String q_text = text.getText();
-		List<String> options = new ArrayList<String>();
+		String q_img = img_path.getText();
+		String q_answer = "";
+		List<Choice> options = new ArrayList<Choice>();
 		//Take only non-null answer choices
-		for (int i=0; i<ans.length; i++) {
-			if ((ans[i].getText() != null) && (!ans[i].getText().isEmpty())) {
-				options.add(ans[i].getText());
+		for (int i=0; i<choices.length; i++) {
+			if (i == Integer.parseInt(answer.getText())) {
+				q_answer = choices[i].getText();
+				options.add(new Choice(true, q_text));
 			}
+			else {
+				options.add(new Choice(false, q_text));
+			}
+			
 		}
-		String correct = choice.getText();
-		String image_path = img_path.getText();
-		System.out.println(q_topic);
-		System.out.println(q_text);
-		for (String o: options) {
-			System.out.println(o);
-		}
-		System.out.println(correct);
-		System.out.println(image_path);
+		Question question = new Question(q_meta, q_text, q_topic, 
+				q_img, q_answer, options);
+		
+		return question;
 	}
 			
 	
@@ -144,6 +147,14 @@ public class AddQuestionFormNode {
 		img_file.setMaxSize(130, 50);
 		VBox.setMargin(img_file, new Insets(10, 40, 50, 40));
 		
+		//Enter metadata of new question
+		TextField meta = new TextField();
+		meta.setPromptText("Image file");
+		meta.setStyle("-fx-font-size:15");
+		meta.setMinSize(130, 50);
+		meta.setMaxSize(130, 50);
+		VBox.setMargin(meta, new Insets(10, 40, 50, 40));
+		
 		//Add another question button
 		Button another = new Button("Add another");
 		another.setStyle("-fx-font-size:15");
@@ -165,7 +176,7 @@ public class AddQuestionFormNode {
 	    submit.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
             	TextField[] ans = new TextField[] {ans1, ans2, ans3, ans4, ans5};
-            	AddQuestionFormNode.submit(topic, text, ans, ans_choice, img_file);
+            	AddQuestionFormNode.submit(meta, topic, text, ans, ans_choice, img_file);
             	currentStage.close();
             }
     	});
@@ -173,6 +184,7 @@ public class AddQuestionFormNode {
 		
 		rightPane.getChildren().add(ans_choice);
 		rightPane.getChildren().add(img_file);
+		rightPane.getChildren().add(meta);
 		rightPane.getChildren().add(another);
 		rightPane.getChildren().add(submit);
 		
