@@ -149,7 +149,7 @@ public class AddQuestionFormNode {
 		
 		//Enter metadata of new question
 		TextField meta = new TextField();
-		meta.setPromptText("Image file");
+		meta.setPromptText("Metadata");
 		meta.setStyle("-fx-font-size:15");
 		meta.setMinSize(130, 50);
 		meta.setMaxSize(130, 50);
