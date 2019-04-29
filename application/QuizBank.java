@@ -32,9 +32,11 @@ public class QuizBank {
 
 	public QuizBank() {
 		this.table = new HashMap<String, topicBucket>();
+		this.len = 0;
 	}
 	
 	public void addQuestionToQuiz(Question q) {
+		this.len += 1;
 		if (!this.table.containsKey(q.getTopic())) {
 			this.table.put(q.getTopic(), new topicBucket());
 		}

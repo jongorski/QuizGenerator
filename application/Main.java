@@ -26,7 +26,7 @@ public class Main extends Application {
 	/*
 	 * Create main GUI page
 	 */
-	public Scene MainGUI(Stage stage) {
+	public Scene MainGUI(QuizBank qb) {
 		
 		VBox vbox = new VBox();
 	    vbox.setAlignment(Pos.CENTER);
@@ -54,7 +54,8 @@ public class Main extends Application {
 		add_q.setStyle("-fx-font-size:15");
 		add_q.setMinSize(150, 60);
 		add_q.setPrefSize(150, 60);
-		Stage add_popup_stage = AddQuestionFormNode.AddQuestion();
+		AddQuestionFormNode addQ = new AddQuestionFormNode();
+		Stage add_popup_stage = addQ.AddQuestion(qb);
 	    add_q.setOnAction(new EventHandler<ActionEvent>() {
 	            @Override public void handle(ActionEvent e) {
 	            	add_popup_stage.show();
@@ -98,8 +99,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			QuizBank qb = new QuizBank();
-			
-			Scene scene = MainGUI(primaryStage);
+			Scene scene = MainGUI(qb);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();

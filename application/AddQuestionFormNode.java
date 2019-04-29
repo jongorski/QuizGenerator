@@ -17,6 +17,24 @@ import javafx.stage.Stage;
 
 public class AddQuestionFormNode {
 	
+	public TextField meta;
+	public TextField topic;
+	public TextArea text;
+	public List<Choice> choices;
+	public TextField ans_choice;
+	public String answer;
+	public TextField img_path;
+	public Button submit;
+	public Question added_question;
+
+	
+	public AddQuestionFormNode() {
+		this.choices = new ArrayList<Choice>();
+	    this.submit = new Button("Submit & close");
+	    this.added_question = null;
+	}
+	
+	
 	/*
 	 * Helper function to submit form 
 	 * 
@@ -26,29 +44,27 @@ public class AddQuestionFormNode {
 	 * choice: javafx TextArea where user enters correct answer choice
 	 * img_path: javafx TextArea where user enters path to assoc image
 	 */
-	public static Question submit(TextField meta, TextField topic, TextArea text, 
-			TextField[] choices, TextField answer, TextField img_path) {
+	public void submit(QuizBank qb, TextField[] choices, TextField answer, TextField meta,
+			TextField topic, TextArea text, TextField img_path) {
 		String q_meta = meta.getText();
 		String q_topic = topic.getText();
 		String q_text = text.getText();
 		String q_img = img_path.getText();
-		String q_answer = "";
-		List<Choice> options = new ArrayList<Choice>();
+		String q_answer = answer.getText();
 		//Take only non-null answer choices
 		for (int i=0; i<choices.length; i++) {
 			if (i == Integer.parseInt(answer.getText())) {
-				q_answer = choices[i].getText();
-				options.add(new Choice(true, q_text));
+				this.answer = choices[i].getText();
+				this.choices.add(new Choice(true, q_text));
 			}
 			else {
-				options.add(new Choice(false, q_text));
+				this.choices.add(new Choice(false, q_text));
 			}
 			
 		}
 		Question question = new Question(q_meta, q_text, q_topic, 
-				q_img, q_answer, options);
-		
-		return question;
+				q_img, q_answer, this.choices);
+		qb.addQuestionToQuiz(question);
 	}
 			
 	
@@ -56,7 +72,7 @@ public class AddQuestionFormNode {
 	 * Set up main stage for add question page
 	 * return stage to be displayed when adding question
 	 */
-	public static Stage AddQuestion() {
+	public Stage AddQuestion(QuizBank qb) {
 		Stage currentStage = new Stage();
 		HBox hbox = new HBox();
 		Scene add_q_scene = new Scene(hbox, 800, 600);
@@ -122,6 +138,8 @@ public class AddQuestionFormNode {
 		ans5.setMaxSize(200, 50);
 		VBox.setMargin(ans5, new Insets(0, 0, 30, 0));
 		
+		TextField[] choices = new TextField[] {ans1, ans2, ans3, ans4, ans5};
+		
 		midPane.getChildren().add(ans1);
 		midPane.getChildren().add(ans2);
 		midPane.getChildren().add(ans3);
@@ -168,25 +186,26 @@ public class AddQuestionFormNode {
     	});
 		VBox.setMargin(another, new Insets(30, 25, 10, 25));
 		
-		//Submit question button
-		Button submit = new Button("Submit & close");
-		submit.setStyle("-fx-font-size:15");
-		submit.setMinSize(150, 60);
-		submit.setMaxSize(150, 60);
-	    submit.setOnAction(new EventHandler<ActionEvent>() {
+		another.setStyle("-fx-font-size:15");
+		another.setMinSize(150, 60);
+		another.setMaxSize(150, 60);
+
+		VBox.setMargin(another, new Insets(30, 25, 10, 25));
+		this.submit.setStyle("-fx-font-size:15");
+		this.submit.setMinSize(150, 60);
+		this.submit.setMaxSize(150, 60);
+	    this.submit.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
-            	TextField[] ans = new TextField[] {ans1, ans2, ans3, ans4, ans5};
-            	AddQuestionFormNode.submit(meta, topic, text, ans, ans_choice, img_file);
-            	currentStage.close();
+              submit(qb, choices, ans_choice, meta, topic, text, img_file);
             }
     	});
-		VBox.setMargin(submit, new Insets(10, 25, 90, 25));
+		VBox.setMargin(this.submit, new Insets(10, 25, 90, 25));
 		
 		rightPane.getChildren().add(ans_choice);
 		rightPane.getChildren().add(img_file);
 		rightPane.getChildren().add(meta);
 		rightPane.getChildren().add(another);
-		rightPane.getChildren().add(submit);
+		rightPane.getChildren().add(this.submit);
 		
 
 		
