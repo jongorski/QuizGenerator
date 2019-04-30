@@ -20,8 +20,22 @@ public class Question {
   private String answer;
 
   // ************************** CONSTRUCTORS **************************************//
-  Question(String metadata, String question, String topic, String image, String answer,
-      List<Choice> choices) {
+  Question(String topic, String question, String answer, List<Choice> choices)  {
+    this.question = question;
+    this.topic = topic;
+    this.answer = answer;
+    this.choices = choices; // max number of choices = 5
+  }
+  
+  Question(String topic, String question, String answer, List<Choice> choices, String metadata)  {
+    this.metadata = metadata;
+    this.question = question;
+    this.topic = topic;
+    this.answer = answer;
+    this.choices = choices; // max number of choices = 5
+  }
+ 
+  Question(String topic, String question, String answer, List<Choice> choices, String metadata, String image) {
     this.metadata = metadata;
     this.question = question;
     this.topic = topic;
