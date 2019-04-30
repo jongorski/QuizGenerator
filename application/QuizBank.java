@@ -10,7 +10,7 @@ public class QuizBank {
 	
 	public HashMap<String, topicBucket> table;
 	public int total_num_questions;
-	public int num_taken;
+	public int curr_q_ID;
 	public int num_correct;
 	
 	class topicBucket {
@@ -35,6 +35,8 @@ public class QuizBank {
 	public QuizBank() {
 		this.table = new HashMap<String, topicBucket>();
 		this.total_num_questions = 0;
+		this.curr_q_ID = 0;
+		this.num_correct = 0;
 	}
 	
 	public void addQuestionToQuiz(Question q) {
@@ -45,9 +47,5 @@ public class QuizBank {
 		this.table.get(q.getTopic()).addQuestionToBucket(q);
 
 	}
-	
-	public int getLen() { return this.total_num_questions; }
-	
-	public HashMap<String, topicBucket> getQuestions() { return this.table; }
-	
+			
 }
