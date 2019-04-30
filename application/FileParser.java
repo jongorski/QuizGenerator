@@ -44,7 +44,7 @@ public class FileParser {
     			String text = (String) next.get("questionText");    //pull out question text
     			String topic = (String) next.get("topic");          //pull out question topic
     			String img = (String) next.get("image");            //pull out question image path
-    			int correct_choice = -1;
+    			String correct_choice = "";
       			Iterator choice_itr = ((JSONArray) next.get("choiceArray")).iterator();
       			int count = 0;
     			while (choice_itr.hasNext()) {  //iterate through each choice
@@ -52,7 +52,7 @@ public class FileParser {
     				String chc = (String) next_choice.get("choice");
     				String isCorrect = (String) next_choice.get("isCorrect");
     				if (isCorrect.toUpperCase().contentEquals("T")) {
-    					correct_choice = count;  //mark correct answer
+    					correct_choice = Integer.toString(count);  //mark correct answer
     				}
     				count++;
     			}
