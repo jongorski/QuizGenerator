@@ -8,35 +8,37 @@ import java.util.Map;
 
 public class QuizBank {
 	
-	private HashMap<String, topicBucket> table;
-	private int len;
+	public HashMap<String, topicBucket> table;
+	public int total_num_questions;
+	public int num_taken;
+	public int num_correct;
 	
 	class topicBucket {
-		int len; 
+		int n; 
 		List<Question> bucket;
 		
 		topicBucket() {
-			this.len = 0;
+			this.n = 0;
 			this.bucket = new ArrayList<Question>();
 		}
 		
 		Question get(int idx) {
-			return this.bucket.get(idx % this.len);
+			return this.bucket.get(idx % this.n);
 		}
 		
 		void addQuestionToBucket(Question q) {
 			this.bucket.add(q);
-			this.len++;
+			this.n++;
 		}
 	}
 
 	public QuizBank() {
 		this.table = new HashMap<String, topicBucket>();
-		this.len = 0;
+		this.total_num_questions = 0;
 	}
 	
 	public void addQuestionToQuiz(Question q) {
-		this.len += 1;
+		this.total_num_questions += 1;
 		if (!this.table.containsKey(q.getTopic())) {
 			this.table.put(q.getTopic(), new topicBucket());
 		}
@@ -44,7 +46,7 @@ public class QuizBank {
 
 	}
 	
-	public int getLen() { return this.len; }
+	public int getLen() { return this.total_num_questions; }
 	
 	public HashMap<String, topicBucket> getQuestions() { return this.table; }
 	

@@ -17,23 +17,19 @@ import javafx.stage.Stage;
 
 public class AddQuestionFormNode {
 	
-	public TextField meta;
-	public TextField topic;
-	public TextArea text;
 	public List<Choice> choices;
-	public TextField ans_choice;
 	public String answer;
-	public TextField img_path;
 	public Button submit;
-	public Question added_question;
 
-	
+
+	/*
+	 * constructor method for AddQuestionFormNode
+	 */
 	public AddQuestionFormNode() {
 		this.choices = new ArrayList<Choice>();
 	    this.submit = new Button("Submit & close");
-	    this.added_question = null;
+	    this.answer = "";
 	}
-	
 	
 	/*
 	 * Helper function to submit form 
@@ -60,8 +56,9 @@ public class AddQuestionFormNode {
 			else {
 				this.choices.add(new Choice(false, q_text));
 			}
-			
 		}
+		System.out.println(q_topic);
+		//create new question to add to quizbank
 		Question question = new Question(q_topic, q_text,
 				q_answer, this.choices, q_meta, q_img);
 		qb.addQuestionToQuiz(question);
@@ -180,6 +177,12 @@ public class AddQuestionFormNode {
 		another.setMaxSize(150, 60);
 	    another.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
+            	topic.clear();
+            	text.clear();
+            	for (int i=0; i<choices.length; i++) { choices[i].clear(); }
+            	ans_choice.clear();
+            	img_file.clear();
+            	meta.clear();
             	currentStage.close();
             	currentStage.show();
             }
