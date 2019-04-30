@@ -46,24 +46,24 @@ public class AddQuestionFormNode {
 	 */
 	public void submit(QuizBank qb, TextField[] choices, TextField answer, TextField meta,
 			TextField topic, TextArea text, TextField img_path) {
-		String q_meta = meta.getText();
-		String q_topic = topic.getText();
-		String q_text = text.getText();
-		String q_img = img_path.getText();
-		String q_answer = answer.getText();
+		String q_meta = meta.getText();      //string metadata
+		String q_topic = topic.getText();    //string topic
+		String q_text = text.getText();      //string text
+		String q_img = img_path.getText();   //string image path
+		String q_answer = answer.getText();  //string answer idx
 		//Take only non-null answer choices
 		for (int i=0; i<choices.length; i++) {
 			if (i == Integer.parseInt(answer.getText())) {
 				this.answer = choices[i].getText();
-				this.choices.add(new Choice(true, q_text));
+				this.choices.add(new Choice(true, q_text));  //mark correct choice as T
 			}
 			else {
 				this.choices.add(new Choice(false, q_text));
 			}
 			
 		}
-		Question question = new Question(q_meta, q_text, q_topic, 
-				q_img, q_answer, this.choices);
+		Question question = new Question(q_topic, q_text,
+				q_answer, this.choices, q_meta, q_img);
 		qb.addQuestionToQuiz(question);
 	}
 			

@@ -44,7 +44,7 @@ public class FileParser {
     			String text = (String) next.get("questionText");    //pull out question text
     			String topic = (String) next.get("topic");          //pull out question topic
     			String img = (String) next.get("image");            //pull out question image path
-    			String correct_choice = "";
+    			String correct_choice = "";                         //String repr index of correct answer
       			Iterator choice_itr = ((JSONArray) next.get("choiceArray")).iterator();
       			int count = 0;
     			while (choice_itr.hasNext()) {  //iterate through each choice
