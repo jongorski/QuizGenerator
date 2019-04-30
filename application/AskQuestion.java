@@ -33,7 +33,7 @@ public class AskQuestion {
 	/*
 	 * Create ask question page
 	 */
-	public Scene AskQuestion(Stage stage, Question q, int qNum) {
+	public Scene AskQuestionScene(Stage stage, Question q, int qNum) {
 
 		VBox vbox = new VBox();
 		vbox.setAlignment(Pos.CENTER);
