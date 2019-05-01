@@ -51,10 +51,10 @@ public class AddQuestionFormNode {
 		for (int i=0; i<choices.length; i++) {
 			if (i == Integer.parseInt(answer.getText())) {
 				this.answer = choices[i].getText();
-				this.choices.add(new Choice(true, q_text));  //mark correct choice as T
+				this.choices.add(new Choice("T", q_text));  //mark correct choice as T
 			}
 			else {
-				this.choices.add(new Choice(false, q_text));
+				this.choices.add(new Choice("F", q_text));
 			}
 		}
 		System.out.println(q_topic);
@@ -171,13 +171,14 @@ public class AddQuestionFormNode {
 		VBox.setMargin(meta, new Insets(10, 40, 50, 40));
 		
 		//Add another question button
-		Button another = new Button("Add another");
+		Button another = new Button("Submit & Add another");
 		another.setStyle("-fx-font-size:15");
 		another.setMinSize(150, 60);
 		another.setMaxSize(150, 60);
 	    another.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
+            	submit(qb, choices, ans_choice, meta, topic, text, img_file);
             	topic.clear();
             	text.clear();
             	for (int i=0; i<choices.length; i++) { choices[i].clear(); }
@@ -201,6 +202,7 @@ public class AddQuestionFormNode {
 	    this.submit.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
               submit(qb, choices, ans_choice, meta, topic, text, img_file);
+              currentStage.close();
             }
     	});
 		VBox.setMargin(this.submit, new Insets(10, 25, 90, 25));
