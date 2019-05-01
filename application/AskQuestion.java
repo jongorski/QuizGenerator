@@ -94,137 +94,8 @@ public class AskQuestion {
 		this.curr_stage.setScene(next_q_scene);
 	}
 	
-	private void resultsHandler() {
-		if (this.num_taken > this.total_num) {
-			//DISPLAY FINAL WINDOWS OR CALL TO THAT CLASS, ETC
-		}
-	}
-	
-	public void beginQuiz() {
-		System.out.println("AskQuestion beginQuiz");
-		nextHandler();
-	}
-	
 
-	/*
-	 * Create ask question page
-	 
-	public Scene AskQScene(Question q, Button button) {
-
-		// Insets(double top, double right, double bottom, double left)
-		VBox vbox = new VBox();
-		vbox.setAlignment(Pos.CENTER);
-
-		Scene scene = new Scene(vbox, 800, 700);
-		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-
-		// Title of ask question page
-		Label title = new Label("Question " + this.num_taken+1 + ":");
-		title.setFont(Font.font("Verdana", FontWeight.BOLD, 50));
-		VBox.setMargin(title, new Insets(20, 0, 40, 0));
-
-		// question being asked
-		Label question = new Label(q.getQuestion());
-		question.setFont(Font.font("Verdana", FontWeight.BOLD, 50));
-		VBox.setMargin(question, new Insets(10, 0, 50, 0));
-
-		// question number out of total number display
-		Label completeness = new Label("" + this.num_taken + "/" + this.total_num);
-		completeness.setFont(Font.font("Verdana", FontWeight.BOLD, 50));
-		VBox.setMargin(completeness, new Insets(80, 80, 10, 0));
-
-		// correct label
-		Label correct = new Label("CORRECT!");
-		correct.setFont(Font.font("Verdana", FontWeight.BOLD, 50));
-		VBox.setMargin(completeness, new Insets(20, 60, 70, 0));
-
-		// incorrect label
-		Label incorrect = new Label("INCORRECT");
-		correct.setFont(Font.font("Verdana", FontWeight.BOLD, 50));
-		VBox.setMargin(incorrect, new Insets(20, 60, 70, 0));
-
-		// gets list of choices for questions
-		List<Choice> choicesList = q.getChoices();
-
-		// create radio buttons for multiple choice
-		// add to radio buttons list
-		List<RadioButton> rbs = new ArrayList<RadioButton>();
-		for (Choice c : choicesList) {
-			RadioButton rb = new RadioButton(c.choice);
-			rbs.add(rb);
-			vbox.getChildren().add(rb);
-			VBox.setMargin(rb, new Insets(10, 0, 20, 0));
-		} // rbs is now list of N buttons with labels 0,...,N-1
-
-		//REWRITE AS EVENT HANDLER
-		int count = 0;
-		for (RadioButton rb : rbs) {
-			if (rb.isSelected()) {
-				if (q.getChoices().get(count).isCorrect) {
-					// USER ENTERED CORRECT ANSWER
-					vbox.getChildren().add(correct);
-					this.num_correct++;
-					 
-				} else {
-					// USER ENTERED INCORRECT ANSWER
-					vbox.getChildren().add(incorrect);
-				}
-			}
-			count++;
-		}
-
-		// image display...
-		// https://www.tutorialspoint.com/javafx/javafx_images.htm
-		// Loading image from URL if image associated with question (not empty string)
-		if (!q.getImage().equals("")) {
-			try {
-				// Creating an image
-				Image image = new Image(new FileInputStream(q.getImage()));
-
-				// Setting the image view
-				ImageView imageView = new ImageView(image);
-
-				// Setting the position of the image
-				imageView.setX(600);
-				imageView.setY(400);
-
-				// setting the fit height and width of the image view
-				imageView.setFitHeight(250);
-				imageView.setFitWidth(350);
-
-				// Setting the preserve ratio of the image view
-				imageView.setPreserveRatio(true);
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-		button.setStyle("-fx-font-size:30");
-		button.setMaxSize(300, 125);
-		button.setMinSize(300, 125);
-		VBox.setMargin(button, new Insets(70, 0, 40, 0));
-
-		return scene;
-	}*/
-	
-	private void radioButtonHandler(List<RadioButton> rbs, List<Choice> choices) {
-		int k = 0;
-		for (int i = 0; i < rbs.size(); i++) {
-			if (rbs.get(i).isSelected()) {
-				if (choices.get(i).isCorrect) {
-					k = 1;
-					this.is_correct.setText("Correct!");
-				}
-			}
-		}
-		if (k != 1) {
-			this.is_correct.setText("Incorrect.");
-		}
-		this.is_correct.setVisible(true);
-	}
-	
-	public Scene AskQScene(Question q, Button button) {
+public Scene AskQScene(Question q, Button button) {
 		VBox main_vbox = new VBox();
 		HBox mid_hbox = new HBox(); // main hbox
 		VBox options_vbox = new VBox();
@@ -311,4 +182,33 @@ public class AskQuestion {
 		Scene scene = new Scene(main_vbox, 800, 700);
 		return scene;
 	}
+
+	
+	private void resultsHandler() {
+		if (this.num_taken > this.total_num) {
+			//DISPLAY FINAL WINDOWS OR CALL TO THAT CLASS, ETC
+		}
+	}
+	
+	public void beginQuiz() {
+		System.out.println("AskQuestion beginQuiz");
+		nextHandler();
+	}
+	
+	private void radioButtonHandler(List<RadioButton> rbs, List<Choice> choices) {
+		int k = 0;
+		for (int i = 0; i < rbs.size(); i++) {
+			if (rbs.get(i).isSelected()) {
+				if (choices.get(i).isCorrect.contentEquals("T")) {
+					k = 1;
+					this.is_correct.setText("Correct!");
+				}
+			}
+		}
+		if (k != 1) {
+			this.is_correct.setText("Incorrect.");
+		}
+		this.is_correct.setVisible(true);
+	}
+	
 }
