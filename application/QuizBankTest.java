@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map.Entry;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,13 +20,6 @@ class QuizBankTest {
 
 //fields that will be used by multiple tests
  protected QuizBank qb;
-// protected Question q1;
-// protected Question q2;
-// protected Question q3;
-// protected Question q4;
-// protected Question q5;
-// protected Choice ch1a;
-
  
   /**
    * @throws java.lang.Exception
@@ -52,105 +44,130 @@ class QuizBankTest {
    */
   List<Question> createQuestions() {
     List<Question> questionList = new ArrayList<Question>();
+    List<Choice> choices = new ArrayList<Choice>();
+    Choice[] ch = new Choice[5];
     
     // create topic 1, question 1 //
     String topic = "Topic 1";
     String question = "Question 1";
-    String answer = "choice 3";
-    Choice ch1 = new Choice(false, "choice 1");
-    Choice ch2 = new Choice(false, "choice 2");
-    Choice ch3 = new Choice(true, "choice 3");
-    Choice ch4 = new Choice(false, "choice 4");
-    Choice ch5 = new Choice(false, "choice 5");
-    List<Choice> choices = new ArrayList<Choice>();
-    choices.add(ch1);
-    choices.add(ch2);
-    choices.add(ch3);
-    choices.add(ch4);
+    ch[0] = new Choice("F", "choice 1");
+    ch[1] = new Choice("F", "choice 2");
+    ch[2] = new Choice("T", "choice 3");
+    ch[3] = new Choice("F", "choice 4");
+    ch[4] = new Choice("F", "choice 5");  
+    
+    // add each Choice to the choices List
+    for (int i=0; i < ch.length; i++) {
+      if (ch[i] != null) {
+        choices.add(ch[i]);
+      }
+    }
 
-    Question q1 = new Question(topic, question, answer, choices);
+    // create the Question object
+    Question q1 = new Question(topic, question, choices);
 
     // create topic 1, question 2 //
     question = "Question 2";
-    answer = "choice 4";
-    ch1 = new Choice(false, "choice 1");
-    ch2 = new Choice(false, "choice 2");
-    ch3 = new Choice(false, "choice 3");
-    ch4 = new Choice(true, "choice 4");
-    choices.clear();
-    choices.add(ch1);
-    choices.add(ch2);
-    choices.add(ch3);
-    choices.add(ch4);
-
-    Question q2 = new Question(topic, question, answer, choices);
+    choices = null;
+    choices = new ArrayList<Choice>();
+    ch[0] = new Choice("F", "choice 1");
+    ch[1] = new Choice("F", "choice 2");
+    ch[2] = new Choice("F", "choice 3");
+    ch[3] = new Choice("T", "choice 4");
+    ch[4] = null;
+    
+    // add each Choice to the choices List
+    for (int i=0; i < ch.length; i++) {
+      if (ch[i] != null) {
+        choices.add(ch[i]);
+      }
+    }
+    
+    // create the Question object
+    Question q2 = new Question(topic, question, choices);
 
     // create topic 1, question 3 //
     question = "Question 3";
-    answer = "choice 1";
-    ch1 = new Choice(true, "choice 1");
-    ch2 = new Choice(false, "choice 2");
-    ch3 = new Choice(false, "choice 3");
-    ch4 = new Choice(false, "choice 4");
-    choices.clear();
-    choices.add(ch1);
-    choices.add(ch2);
-    choices.add(ch3);
-    choices.add(ch4);
-
-    Question q3 = new Question(topic, question, answer, choices);
+    choices = null;
+    choices = new ArrayList<Choice>();  
+    ch[0] = new Choice("T", "choice 1");
+    ch[1] = new Choice("F", "choice 2");
+    ch[2] = new Choice("F", "choice 3");
+    ch[3] = new Choice("F", "choice 4");
+    ch[4] = null;
+    
+    // add each Choice to the choices List
+    for (int i=0; i < ch.length; i++) {
+      if (ch[i] != null) {
+        choices.add(ch[i]);
+      }
+    }
+    
+    // create the Question object
+    Question q3 = new Question(topic, question, choices);
 
     // create topic 2, question 1 //
     topic = "Topic 2";
     question = "Question 1";
-    answer = "choice 2";
-    ch1 = new Choice(false, "choice 1");
-    ch2 = new Choice(true, "choice 2");
-    ch3 = new Choice(false, "choice 3");
-    ch4 = new Choice(false, "choice 4");
-    choices.clear();
-    choices.add(ch1);
-    choices.add(ch2);
-    choices.add(ch3);
-    choices.add(ch4);
+    choices = null;
+    choices = new ArrayList<Choice>();
+    ch[0] = new Choice("F", "choice 1");
+    ch[1] = new Choice("T", "choice 2");
+    ch[2] = new Choice("F", "choice 3");
+    ch[3] = new Choice("F", "choice 4");
+    ch[4] = null;
 
-    Question q4 = new Question(topic, question, answer, choices);
+    // add each Choice to the choices List
+    for (int i = 0; i < ch.length; i++) {
+      if (ch[i] != null) {
+        choices.add(ch[i]);
+      }
+    }
+
+    // create the Question object
+    Question q4 = new Question(topic, question, choices);
     
     // create topic 2, question 3 //
     topic = "Topic 2";
     question = "Question 2";
-    answer = "choice 5";
-    ch1 = new Choice(false, "choice 1");
-    ch2 = new Choice(false, "choice 2");
-    ch3 = new Choice(false, "choice 3");
-    ch4 = new Choice(false, "choice 4");
-    ch5 = new Choice(true, "choice 5");
-    choices.clear();
-    choices.add(ch1);
-    choices.add(ch2);
-    choices.add(ch3);
-    choices.add(ch4);
-    choices.add(ch5);
+    choices = null;
+    choices = new ArrayList<Choice>();
+    ch[0] = new Choice("F", "choice 1");
+    ch[1] = new Choice("F", "choice 2");
+    ch[2] = new Choice("F", "choice 3");
+    ch[3] = new Choice("F", "choice 4");
+    ch[4] = new Choice("T", "choice 5");
 
-    Question q5 = new Question(topic, question, answer, choices);
+    // add each Choice to the choices List
+    for (int i=0; i < ch.length; i++) {
+      if (ch[i] != null) {
+        choices.add(ch[i]);
+      }
+    }
+
+    // create the Question object
+    Question q5 = new Question(topic, question, choices);
 
     // create topic 2, question 3 //
     topic = "Topic 3";
     question = "Question 1";
-    answer = "choice 3";
-    ch1 = new Choice(false, "choice 1");
-    ch2 = new Choice(false, "choice 2");
-    ch3 = new Choice(true, "choice 3");
-    ch4 = new Choice(false, "choice 4");
-    ch5 = new Choice(false, "choice 5");
-    choices.clear();
-    choices.add(ch1);
-    choices.add(ch2);
-    choices.add(ch3);
-    choices.add(ch4);
-    choices.add(ch5);
+    choices = null;
+    choices = new ArrayList<Choice>();
+    ch[0] = new Choice("F", "choice 1");
+    ch[1] = new Choice("F", "choice 2");
+    ch[2] = new Choice("T", "choice 3");
+    ch[3] = new Choice("F", "choice 4");
+    ch[4] = new Choice("F", "choice 5");
 
-    Question q6 = new Question(topic, question, answer, choices);
+    // add each Choice to the choices List
+    for (int i=0; i < ch.length; i++) {
+      if (ch[i] != null) {
+        choices.add(ch[i]);
+      }
+    }
+
+    // create the Question object
+    Question q6 = new Question(topic, question, choices);
     
     questionList.add(q1);
     questionList.add(q2);
@@ -182,7 +199,7 @@ class QuizBankTest {
 
     // get all questions from the QuizBank 
     HashMap<String, topicBucket> qTable;
-    qTable = qb.getQuestions();
+    qTable = qb.table;
 
     // get List of Questions for Topic 1 //
     topicBucket tB = qTable.get("Topic 1");
@@ -200,7 +217,7 @@ class QuizBankTest {
     // test - topic 1, question 2 //
     question = "Question 2";
     answer = "choice 4";
-    q_a_found = test000_AddQuestionToQuizHelper("Question 2", "choice 4", qList);
+    q_a_found = test000_AddQuestionToQuizHelper("Question 2", answer, qList);
     if (q_a_found == false) {
       fail(topic + ", " + question + ", " + answer + " not found");
     }
@@ -253,7 +270,7 @@ class QuizBankTest {
    * @param question - question to search for within given List
    * @param answer - answer expected for the given question
    * @param qList - List of Question objects to search for the question/answer combination
-   * @return true if the question/answer combo is found, otherwise false
+   * @return "T" if the question/answer combo is found, otherwise false
    */
   boolean test000_AddQuestionToQuizHelper(String question, String answer, List<Question> qList) {
     for (Question q : qList) {
@@ -265,11 +282,12 @@ class QuizBankTest {
     }
     return false;
   }
+  
   /**
    * Creates a new QuizBank object and adds several topics and questions. Verifies that expected number of Questions per topic is returned
    */
   @Test
-  void test001_GetLen() {
+  void test001_GetNumberQuestions() {
     
     String topic;
     
@@ -282,36 +300,28 @@ class QuizBankTest {
 
     // get all questions from the QuizBank 
     HashMap<String, topicBucket> qTable;
-    qTable = qb.getQuestions();
+    qTable = qb.table;
 
     // get the number of Questions for Topic 1 //
     topic = "Topic 1";
     topicBucket tB = qTable.get(topic);
-    if (tB.len != 3) {
-      fail("length of topicBucket " + topic + " did not return the expected value: " + tB.len);
+    if (tB.n != 3) {
+      fail("length of topicBucket " + topic + " did not return the expected value: " + tB.n);
     }
     
     // get the number of Questions for Topic 2 //
     topic = "Topic 2";
     tB = qTable.get(topic);
-    if (tB.len != 2) {
-      fail("length of topicBucket " + topic + " did not return the expected value: " + tB.len);
+    if (tB.n != 2) {
+      fail("length of topicBucket " + topic + " did not return the expected value: " + tB.n);
     }
     
     // get the number of Questions for Topic 2 //
     topic = "Topic 3";
     tB = qTable.get(topic);
-    if (tB.len != 1) {
-      fail("length of topicBucket " + topic + " did not return the expected value: " + tB.len);
+    if (tB.n != 1) {
+      fail("length of topicBucket " + topic + " did not return the expected value: " + tB.n);
     }
-  }
-
-  /**
-   * Test method for {@link application.QuizBank#getQuestions()}.
-   */
-  @Test
-  void testGetQuestions() {
-    fail("Not yet implemented");
   }
 
 }
