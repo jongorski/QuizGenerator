@@ -32,7 +32,7 @@ public class QuizBank {
 		}
 		
 		Question get(int idx) {
-			return this.bucket.get(idx % this.n);
+			return this.bucket.get(idx);
 		}
 		
 		void addQuestionToBucket(Question q) {
@@ -70,7 +70,7 @@ public class QuizBank {
 		System.out.println("QuizBank getRandomN STARTING LOOP");
 		for (int i=0; i<n; i++) {
 			System.out.println("    i: " + i);
-			Question randomQ = question_bucket.get(rand.nextInt());
+			Question randomQ = question_bucket.get(rand.nextInt(n));
 			if (randomQ.asked) { i--; }
 			else {
 				randomQ.asked = true;
