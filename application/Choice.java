@@ -24,19 +24,19 @@ package application;
  * @author mterracina
  *
  */
-public class Choice {
+public class Choice implements ChoiceADT {
 
-  //************************** FIELDS ******************************************//
-  public boolean isCorrect;
+  // ************************** FIELDS ******************************************//
+  public String isCorrect;
   public String choice;
 
-  //************************** CONSTRUCTORS **************************************//
-  Choice(boolean isCorrect, String choice) {
+  // ************************** CONSTRUCTORS **************************************//
+  Choice(String isCorrect, String choice) {
     this.isCorrect = isCorrect;
     this.choice = choice;
   }
 
-  //************************** METHODS ********************************************//
+  // ************************** METHODS ********************************************//
   /**
    * Returns String representation of this Choice
    * 
@@ -47,12 +47,12 @@ public class Choice {
   }
 
   /**
-   * Returns true/false depending on whether or not this Choice is the correct Choice for the
-   * Question
+   * Returns T (for true) or F (for false) depending on whether or not this Choice is the correct
+   * Choice for the Question
    * 
-   * @return true if this Choice is the correct Choice, false otherwise
+   * @return T if this Choice is the correct Choice, F otherwise
    */
-  public boolean getIsCorrect() {
+  public String getIsCorrect() {
     return this.isCorrect;
   }
 } // END CLASS
