@@ -48,7 +48,8 @@ public class Main extends Application {
 			
 			System.out.println("main 2");
 			Question q = new Question("dogs", "What breed is this?", 
-					choices, "such a cute dog", "harrier-puppy.jpg");
+					choices, "such a cute dog", "../"
+							+ "harrier-puppy.jpg");
 			qb.addQuestionToQuiz(q);
 			System.out.println("main 3");
 			QuizStart start = new QuizStart(qb, primaryStage);
