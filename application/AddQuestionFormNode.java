@@ -60,7 +60,7 @@ public class AddQuestionFormNode {
 		System.out.println(q_topic);
 		//create new question to add to quizbank
 		Question question = new Question(q_topic, q_text,
-				q_answer, this.choices, q_meta, q_img);
+				 this.choices, q_meta, q_img);
 		qb.addQuestionToQuiz(question);
 	}
 			
@@ -176,7 +176,8 @@ public class AddQuestionFormNode {
 		another.setMinSize(150, 60);
 		another.setMaxSize(150, 60);
 	    another.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
+            @Override
+            public void handle(ActionEvent e) {
             	topic.clear();
             	text.clear();
             	for (int i=0; i<choices.length; i++) { choices[i].clear(); }

@@ -18,6 +18,9 @@ public class Question implements QuestionADT {
   private String image;
   private List<Choice> choices;
 //  private String answer;
+  private String answer;
+  public boolean asked;
+
 
   // ************************** CONSTRUCTORS **************************************//
 //  Question(String topic, String question, String answer, List<Choice> choices)  {
@@ -26,6 +29,7 @@ public class Question implements QuestionADT {
     this.topic = topic;
 //    this.answer = answer;
     this.choices = choices; // max number of choices = 5
+    this.asked = false;
   }
   
   Question(String topic, String question, List<Choice> choices, String metadata)  {
@@ -33,6 +37,8 @@ public class Question implements QuestionADT {
     this.question = question;
     this.topic = topic;
     this.choices = choices; // max number of choices = 5
+    this.asked = false;
+
   }
  
   Question(String topic, String question, List<Choice> choices, String metadata, String image) {
@@ -41,6 +47,7 @@ public class Question implements QuestionADT {
     this.topic = topic;
     this.image = image;
     this.choices = choices; // max number of choices = 5
+    this.asked = false;
   }
 
   // ************************** METHODS ********************************************//

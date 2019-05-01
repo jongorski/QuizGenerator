@@ -1,5 +1,8 @@
 package application;
 
+import java.util.Arrays;
+import java.util.Set;
+
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -16,16 +19,38 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 public class QuizStart {
-
-	public QuizStart() {
-
+	
+	private Stage curr_stage;
+	private QuizBank qb;
+	
+	public QuizStart(QuizBank qb, Stage curr_stage) {
+		this.qb = qb;
+		this.curr_stage = curr_stage;
+	}
+	
+	private void startHandler(String topic, int n) {
+		System.out.println("QuizStart startHandler 1");
+		AskQuestion asker = new AskQuestion(this.curr_stage,
+			                                this.qb,
+			                                topic, 
+			                                n);
+		System.out.println("QuizStart startHandler 2");
+		asker.beginQuiz();
 	}
 
-	public Scene WelcomeScene(QuizBank qb, Stage curr_stage, Scene next_scene) {
+	/*
+	 * Creates welcome scene for quiz users
+	 * 
+	 * qb: user's quizbank
+	 * curr_stage: current stage of GUI to change scene
+	 * next_scene: scene to move to once 'move on' button is pressed
+	 * 
+	 */
+	public Scene WelcomeScene(Scene next_scene) {
+		System.out.println("welcome scene");
 		VBox vbox = new VBox();
 		vbox.setAlignment(Pos.CENTER);
 		Scene scene = new Scene(vbox, 800, 600);
-		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 
 		// input path to json file
 		TextField input_json_path = new TextField();
@@ -71,11 +96,11 @@ public class QuizStart {
 	}
 
 	public Scene AddQuestionOrStart() {
+		System.out.println("add or start");
 		VBox vbox = new VBox();
 		vbox.setAlignment(Pos.CENTER);
 
 		Scene scene = new Scene(vbox, 800, 700);
-		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 
 		// Title of main page
 		Label title = new Label("QuizGenerator");
@@ -90,7 +115,11 @@ public class QuizStart {
 		VBox.setMargin(start_button, new Insets(70, 0, 40, 0));
 
 		// Topic list
-		String topics[] = { "Math", "Comp Sci", "English", "History", "PE", "Photo" };
+		int k = 0;
+		String[] topics = new String[qb.topics.size()];
+		for (String top : qb.topics) {
+			topics[k++] = top;
+		}
 		ComboBox<String> topic_box = new ComboBox<String>(FXCollections.observableArrayList(topics));
 		topic_box.setPromptText("Topics");
 		topic_box.setStyle("-fx-font-size:15");
@@ -106,6 +135,14 @@ public class QuizStart {
 		num_q.setMinSize(225, 75);
 		num_q.setMaxSize(225, 75);
 		VBox.setMargin(num_q, new Insets(20, 0, 20, 0));
+		
+		start_button.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				System.out.println("start");
+				startHandler((String)topic_box.getValue(), Integer.parseInt((String)num_q.getText()));
+			}
+		});
 
 		vbox.getChildren().add(title);
 		vbox.getChildren().add(topic_box);
