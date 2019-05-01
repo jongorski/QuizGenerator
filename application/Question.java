@@ -34,13 +34,8 @@ public class Question implements QuestionADT {
   private String topic;
   private String image;
   private List<Choice> choices;
-<<<<<<< HEAD
-//  private String answer;
   private String answer;
   public boolean asked;
-
-=======
->>>>>>> 29e22486d5ef75ad9e24f13348d334445f2e84aa
 
   // ************************** CONSTRUCTORS **************************************//
   Question(String topic, String question, List<Choice> choices) {
