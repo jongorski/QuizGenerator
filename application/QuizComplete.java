@@ -113,7 +113,7 @@ public class QuizComplete {
 			public void handle(ActionEvent e) {
 				if (fileText.getText() != null && !fileText.getText().isEmpty()) {
 					String filename = fileText.getText();
-					//Save File
+					boolean saved = saveFile(filename);
 					curr_stage.setScene(goodbyeSavedScene());
 				}
 			}
@@ -165,5 +165,13 @@ public class QuizComplete {
 		
 		vBox.getChildren().add(goodbyeSavedLabel);
 		return goodbye_Saved_Scene;
+	}
+	
+	public static boolean saveFile(String filename) {
+		
+		//if file saved return true
+		//else return false
+		return true;
+		
 	}
 }
