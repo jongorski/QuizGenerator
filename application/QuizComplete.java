@@ -27,7 +27,7 @@ public class QuizComplete {
 	}
 	
 	
-	public static Scene QuizCompleteScene(Stage curr_stage, int correct, int answered) {
+	public Scene QuizCompleteScene(Stage curr_stage, int correct, int answered) {
 		
 		VBox vBox = new VBox();
 		vBox.setAlignment(Pos.CENTER);
@@ -83,14 +83,10 @@ public class QuizComplete {
 		vBox.getChildren().add(quizAgainButton);
 		vBox.getChildren().add(exitButton);
 		
-		
-		
-		
-		
 		return quiz_Complete_Scene;
 	}
 	
-	public static Scene ExitScene(Stage curr_stage) {
+	public Scene ExitScene(Stage curr_stage) {
 		VBox vBox = new VBox();
 		vBox.setAlignment(Pos.CENTER);
 		Scene exit_Scene = new Scene(vBox, 700, 500);
@@ -145,7 +141,7 @@ public class QuizComplete {
 		return exit_Scene;
 	}
 	
-	public static Scene goodbyeScene() {
+	public Scene goodbyeScene() {
 		VBox vBox = new VBox();
 		vBox.setAlignment(Pos.CENTER);
 		Scene goodbye_Scene = new Scene(vBox, 700,500);
@@ -158,7 +154,7 @@ public class QuizComplete {
 		return goodbye_Scene;
 	}
 	
-	public static Scene goodbyeSavedScene() {
+	public Scene goodbyeSavedScene() {
 		VBox vBox = new VBox();
 		vBox.setAlignment(Pos.CENTER);
 		Scene goodbye_Saved_Scene = new Scene(vBox, 700,500);
