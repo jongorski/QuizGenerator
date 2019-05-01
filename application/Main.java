@@ -43,14 +43,22 @@ public class Main extends Application {
 		try {
 			System.out.println("main 1");
 			QuizBank qb = new QuizBank();
-			
-			List<Choice> choices = new ArrayList<Choice>();
+		
 			
 			System.out.println("main 2");
-			Question q = new Question("dogs", "What breed is this?", 
-					choices, "such a cute dog", "../"
+			List<Choice> choices1 = new ArrayList<Choice>();
+			choices1.add(new Choice("T", "Harrier"));
+			choices1.add(new Choice("F", "Lab"));
+			Question q1 = new Question("dogs", "What breed is this?", 
+					choices1, "such a cute dog", "../"
 							+ "harrier-puppy.jpg");
-			qb.addQuestionToQuiz(q);
+			List<Choice> choices2 = new ArrayList<Choice>();
+			choices2.add(new Choice("T", "yah"));
+			Question q2 = new Question("sports", "sports?", 
+					choices2, "sports", "");
+			qb.addQuestionToQuiz(q1);
+			qb.addQuestionToQuiz(q2);
+
 			System.out.println("main 3");
 			QuizStart start = new QuizStart(qb, primaryStage);
 			System.out.println("main 4");
