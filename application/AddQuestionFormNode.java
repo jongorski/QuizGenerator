@@ -56,6 +56,8 @@ public class AddQuestionFormNode {
 		Question question = new Question(q_topic, q_text,
 				 q_choices, q_meta, q_img);
 		this.qb.addQuestionToQuiz(question);
+		System.out.println(q_topic);
+		System.out.println(this.qb.topics);
 	}
 			
 	
@@ -224,6 +226,7 @@ public class AddQuestionFormNode {
 		AddQuestionFormNode addQ = new AddQuestionFormNode(qb);
 		Stage addPopup = addQ.AddQuestion();
 		addPopup.show();
+		System.out.println(addQ.qb.topics);
 		return addQ.qb;
 	}
 }
