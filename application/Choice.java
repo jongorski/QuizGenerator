@@ -68,7 +68,7 @@ public class Choice implements ChoiceADT {
    * associated Question
    * 
    * @return true if this Choice is the correct Choice, false otherwise
-   */
+   */ 
   public boolean getIsCorrect_Bool() {
     if (this.isCorrect.equals("T")) {
       return true;
