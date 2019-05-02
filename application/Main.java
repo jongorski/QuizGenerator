@@ -24,7 +24,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			
+			/*
 			QuizBank qb = new QuizBank();
 			List<Choice> choices1 = new ArrayList<Choice>();
 			choices1.add(new Choice("T", "Harrier"));
@@ -38,8 +38,8 @@ public class Main extends Application {
 					choices2, "sports", "");
 			qb.addQuestionToQuiz(q1);
 			qb.addQuestionToQuiz(q2);
-
-			QuizStart.startQuiz(primaryStage, qb);
+			*/
+			QuizStart.startQuiz(primaryStage);
 
 		} catch (Exception e) {
 			e.printStackTrace();
