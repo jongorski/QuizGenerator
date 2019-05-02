@@ -47,7 +47,6 @@ public class QuizBank {
 	
 	public void addQuestionToQuiz(Question q) {
 		this.topics.add(q.getTopic());
-		System.out.println(this.topics);
 		this.total_num_questions += 1;
 		if (!this.table.containsKey(q.getTopic())) {
 			this.table.put(q.getTopic(), new topicBucket(q.getTopic()));
