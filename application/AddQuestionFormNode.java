@@ -17,18 +17,13 @@ import javafx.stage.Stage;
 
 public class AddQuestionFormNode {
 	
-	public List<Choice> choices;
-	public String answer;
-	public Button submit;
-
+	public QuizBank qb;
 
 	/*
 	 * constructor method for AddQuestionFormNode
 	 */
-	public AddQuestionFormNode() {
-		this.choices = new ArrayList<Choice>();
-	    this.submit = new Button("Submit & close");
-	    this.answer = "";
+	public AddQuestionFormNode(QuizBank quizbank) {
+	    this.qb = quizbank;
 	}
 	
 	/*
@@ -40,7 +35,7 @@ public class AddQuestionFormNode {
 	 * choice: javafx TextArea where user enters correct answer choice
 	 * img_path: javafx TextArea where user enters path to assoc image
 	 */
-	public void submit(QuizBank qb, TextField[] choices, TextField answer, TextField meta,
+	public void getSubmittedQuestion(TextField[] choices, TextField answer, TextField meta,
 			TextField topic, TextArea text, TextField img_path) {
 		String q_meta = meta.getText();      //string metadata
 		String q_topic = topic.getText();    //string topic
@@ -48,20 +43,19 @@ public class AddQuestionFormNode {
 		String q_img = img_path.getText();   //string image path
 		String q_answer = answer.getText();  //string answer idx
 		//Take only non-null answer choices
+		List<Choice> q_choices = new ArrayList<Choice>();
 		for (int i=0; i<choices.length; i++) {
-			if (i == Integer.parseInt(answer.getText())) {
-				this.answer = choices[i].getText();
-				this.choices.add(new Choice("T", q_text));  //mark correct choice as T
+			if (i == Integer.parseInt(q_answer)) {
+				q_choices.add(new Choice("T", q_text));  //mark correct choice as T
 			}
 			else {
-				this.choices.add(new Choice("F", q_text));
+				q_choices.add(new Choice("F", q_text));
 			}
 		}
-		System.out.println(q_topic);
 		//create new question to add to quizbank
 		Question question = new Question(q_topic, q_text,
-				 this.choices, q_meta, q_img);
-		qb.addQuestionToQuiz(question);
+				 q_choices, q_meta, q_img);
+		this.qb.addQuestionToQuiz(question);
 	}
 			
 	
@@ -69,7 +63,7 @@ public class AddQuestionFormNode {
 	 * Set up main stage for add question page
 	 * return stage to be displayed when adding question
 	 */
-	public Stage AddQuestion(QuizBank qb) {
+	public Stage AddQuestion() {
 		Stage currentStage = new Stage();
 		HBox hbox = new HBox();
 		Scene add_q_scene = new Scene(hbox, 800, 600);
@@ -178,7 +172,7 @@ public class AddQuestionFormNode {
 	    another.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-            	submit(qb, choices, ans_choice, meta, topic, text, img_file);
+            	getSubmittedQuestion(choices, ans_choice, meta, topic, text, img_file);
             	topic.clear();
             	text.clear();
             	for (int i=0; i<choices.length; i++) { choices[i].clear(); }
@@ -195,23 +189,23 @@ public class AddQuestionFormNode {
 		another.setMinSize(150, 60);
 		another.setMaxSize(150, 60);
 
-		VBox.setMargin(another, new Insets(30, 25, 10, 25));
-		this.submit.setStyle("-fx-font-size:15");
-		this.submit.setMinSize(150, 60);
-		this.submit.setMaxSize(150, 60);
-	    this.submit.setOnAction(new EventHandler<ActionEvent>() {
+		Button submit = new Button("Submit & Close");
+		submit.setStyle("-fx-font-size:15");
+		submit.setMinSize(150, 60);
+		submit.setMaxSize(150, 60);
+	    submit.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
-              submit(qb, choices, ans_choice, meta, topic, text, img_file);
+              getSubmittedQuestion(choices, ans_choice, meta, topic, text, img_file);
               currentStage.close();
             }
     	});
-		VBox.setMargin(this.submit, new Insets(10, 25, 90, 25));
+		VBox.setMargin(submit, new Insets(10, 25, 90, 25));
 		
 		rightPane.getChildren().add(ans_choice);
 		rightPane.getChildren().add(img_file);
 		rightPane.getChildren().add(meta);
 		rightPane.getChildren().add(another);
-		rightPane.getChildren().add(this.submit);
+		rightPane.getChildren().add(submit);
 		
 
 		
@@ -223,5 +217,13 @@ public class AddQuestionFormNode {
 		currentStage.setScene(add_q_scene);
 		return currentStage;
 	}
-
+	
+	public QuizBank getQB() { return this.qb; }
+	
+	public static QuizBank runAddQ(QuizBank qb) {
+		AddQuestionFormNode addQ = new AddQuestionFormNode(qb);
+		Stage addPopup = addQ.AddQuestion();
+		addPopup.show();
+		return addQ.qb;
+	}
 }
