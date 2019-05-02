@@ -1,8 +1,5 @@
 package application;
 
-import java.util.Arrays;
-import java.util.Set;
-
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -20,34 +17,38 @@ import javafx.stage.Stage;
 
 public class QuizStart {
 	
-	private Stage curr_stage;
-	private QuizBank qb;
+	public QuizBank qb;
+	public Stage curr_stage;
 	
-	public QuizStart(QuizBank qb, Stage curr_stage) {
-		this.qb = qb;
-		this.curr_stage = curr_stage;
+	public QuizStart(QuizBank quizbank, Stage stage) {
+		this.qb = quizbank;
+		this.curr_stage = stage;
 	}
 	
 	private void startHandler(String topic, int n) {
-		System.out.println("QuizStart startHandler 1");
 		AskQuestion asker = new AskQuestion(this.curr_stage,
 			                                this.qb,
 			                                topic, 
 			                                n);
-		System.out.println("QuizStart startHandler 2");
 		asker.beginQuiz();
 	}
+	
+	private void moveOnHandler(Scene next) {
+		this.curr_stage.setScene(next);
+	}
 
+	private void addQuestionHandler() {
+		AddQuestionFormNode addQ = new AddQuestionFormNode(this.qb);
+		Stage addPop = addQ.AddQuestion();
+		addPop.show();
+		
+	}
 	/*
 	 * Creates welcome scene for quiz users
 	 * 
-	 * qb: user's quizbank
-	 * curr_stage: current stage of GUI to change scene
 	 * next_scene: scene to move to once 'move on' button is pressed
-	 * 
 	 */
-	public Scene WelcomeScene(Scene next_scene) {
-		System.out.println("welcome scene");
+	private Scene WelcomeScene() {
 		VBox vbox = new VBox();
 		vbox.setAlignment(Pos.CENTER);
 		Scene scene = new Scene(vbox, 800, 600);
@@ -65,12 +66,10 @@ public class QuizStart {
 		add_q.setStyle("-fx-font-size:15");
 		add_q.setMinSize(300, 125);
 		add_q.setPrefSize(300, 125);
-		AddQuestionFormNode addQ = new AddQuestionFormNode();
-		Stage add_popup_stage = addQ.AddQuestion(qb);
 		add_q.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				add_popup_stage.show();
+				addQuestionHandler();
 			}
 		});
 		VBox.setMargin(add_q, new Insets(0, 0, 30, 0));
@@ -80,10 +79,11 @@ public class QuizStart {
 		next.setStyle("-fx-font-size:15");
 		next.setMinSize(300, 125);
 		next.setPrefSize(300, 125);
+		Scene next_scene = this.AddQuestionOrStart();
 		next.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				curr_stage.setScene(next_scene);
+				moveOnHandler(next_scene);
 			}
 		});
 		VBox.setMargin(next, new Insets(0, 0, 30, 0));
@@ -95,8 +95,7 @@ public class QuizStart {
 		return scene;
 	}
 
-	public Scene AddQuestionOrStart() {
-		System.out.println("add or start");
+	private Scene AddQuestionOrStart() {
 		VBox vbox = new VBox();
 		vbox.setAlignment(Pos.CENTER);
 
@@ -116,11 +115,13 @@ public class QuizStart {
 
 		// Topic list
 		int k = 0;
-		String[] topics = new String[qb.topics.size()];
-		for (String top : qb.topics) {
-			topics[k++] = top;
+		String[] topics = new String[this.qb.topics.size()];
+		for (String top : this.qb.topics) {
+			topics[k] = top;
+			k = k + 1;
 		}
 		ComboBox<String> topic_box = new ComboBox<String>(FXCollections.observableArrayList(topics));
+		topic_box.setVisibleRowCount(10);
 		topic_box.setPromptText("Topics");
 		topic_box.setStyle("-fx-font-size:15");
 		topic_box.setMinSize(225, 75);
@@ -139,8 +140,8 @@ public class QuizStart {
 		start_button.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				System.out.println("start");
-				startHandler((String)topic_box.getValue(), Integer.parseInt((String)num_q.getText()));
+				startHandler((String)topic_box.getValue(),
+		                    Integer.parseInt((String)num_q.getText()));
 			}
 		});
 
@@ -151,4 +152,11 @@ public class QuizStart {
 
 		return scene;
 	}
+	
+	public static void startQuiz(Stage curr_stage, QuizBank quizbank) {
+		QuizStart starter = new QuizStart(quizbank, curr_stage);
+		curr_stage.setScene(starter.WelcomeScene());
+		curr_stage.show();
+	}
+	
 }

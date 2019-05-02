@@ -20,32 +20,12 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 public class Main extends Application {
-	
-	
-	/**
-	 * Creates and runs ask Question scene with given question.
-	 * 
-	 * @param primaryStage
-	 * @param q
-	 * @param qNum
-	 * @param totalQuesNum
-	 
-	public void displayQuestion(Stage primaryStage, Question q) {
-		AskQuestion a = new AskQuestion();
-		Scene q_scene = a.AskQuestionScene(primaryStage, q);
-		q_scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-		primaryStage.setScene(q_scene);
-		primaryStage.show();
-	}*/
 
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			System.out.println("main 1");
-			QuizBank qb = new QuizBank();
-		
 			
-			System.out.println("main 2");
+			QuizBank qb = new QuizBank();
 			List<Choice> choices1 = new ArrayList<Choice>();
 			choices1.add(new Choice("T", "Harrier"));
 			choices1.add(new Choice("F", "Lab"));
@@ -59,16 +39,8 @@ public class Main extends Application {
 			qb.addQuestionToQuiz(q1);
 			qb.addQuestionToQuiz(q2);
 
-			System.out.println("main 3");
-			QuizStart start = new QuizStart(qb, primaryStage);
-			System.out.println("main 4");
-			Scene AddQOrStart = start.AddQuestionOrStart();
-			System.out.println("main 5");
-			Scene WelcomeScene = start.WelcomeScene(AddQOrStart);
-			System.out.println("main 6");
-			WelcomeScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			primaryStage.setScene(WelcomeScene);
-			primaryStage.show();
+			QuizStart.startQuiz(primaryStage, qb);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

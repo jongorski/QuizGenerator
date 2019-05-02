@@ -15,8 +15,6 @@ public class QuizBank {
 	
 	public HashMap<String, topicBucket> table;  //map topic --> list of corresp. questions
 	public int total_num_questions;  //total questions in this bank
-	public int num_correct;  //total number of questions answered correctly so far
-	public int num_taken;
 	public Set<String> topics;
 	
 	class topicBucket {
@@ -25,8 +23,8 @@ public class QuizBank {
 		int n; 
 		List<Question> bucket;
 		
-		topicBucket() {
-			this.topic = "";
+		topicBucket(String topic) {
+			this.topic = topic;
 			this.n = 0;
 			this.bucket = new ArrayList<Question>();
 		}
@@ -44,32 +42,27 @@ public class QuizBank {
 	public QuizBank() {
 		this.table = new HashMap<String, topicBucket>();
 		this.total_num_questions = 0;
-		this.num_correct = 0;
-		this.num_taken = 1;
 		this.topics = new HashSet<String>();
 	}
 	
 	public void addQuestionToQuiz(Question q) {
 		this.topics.add(q.getTopic());
+		System.out.println(this.topics);
 		this.total_num_questions += 1;
 		if (!this.table.containsKey(q.getTopic())) {
-			this.table.put(q.getTopic(), new topicBucket());
+			this.table.put(q.getTopic(), new topicBucket(q.getTopic()));
 		}
 		this.table.get(q.getTopic()).addQuestionToBucket(q);
 	}
 	
 	public List<Question> getRandomN(String topic, int n) {
-		System.out.println("QuizBank getRandomN 1");
 		List<Question> selected = new ArrayList<Question>();
 		if (n > this.table.get(topic).n) {
 			n = this.table.get(topic).n;
 		}
-		System.out.println("QuizBank getRandomN 2");
 		topicBucket question_bucket = this.table.get(topic);
 		Random rand = new Random();
-		System.out.println("QuizBank getRandomN STARTING LOOP");
 		for (int i=0; i<n; i++) {
-			System.out.println("    i: " + i);
 			Question randomQ = question_bucket.get(rand.nextInt(n));
 			if (randomQ.asked) { i--; }
 			else {
@@ -77,7 +70,6 @@ public class QuizBank {
 				selected.add(randomQ);
 			}
 		}
-		System.out.println("QuizBank getRandomN 3");
 		return selected;
 	}
 			
