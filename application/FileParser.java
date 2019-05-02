@@ -1,21 +1,38 @@
+///////////////////////////////////////////////////////////////////////////////
+//
+// Title:           FileParser
+// Course:          CS400 Spring 2019
+// Project:         Team Project 
+//
+// Authors:         Jack Wolf
+//                  Mikel Terracina
+//
+// Email:           jwolf22@wisc.edu           
+//                  mterracina@wisc.edu
+//
+// Lecturer's Name: Andrew Kuemmel
+// Lecture Number:  004
+//
+// Due Date:        2019-05-02
+//
+///////////////////////////// CREDIT OUTSIDE HELP /////////////////////////////
+// Online Sources: 
 // https://www.javatpoint.com/java-string-replaceall
 // https://stackoverflow.com/questions/34930249/replaceall-by-in-java
+// 
+/////////////////////////////// 80 COLUMNS WIDE ///////////////////////////////
 package application;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.HashMap;
-//import java.io.IOException;
-//import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.*;
-import application.QuizBank.topicBucket;
 
 /*
  * Class to parse JSON and return objects of type Question
@@ -63,11 +80,6 @@ public class FileParser {
         qText = qText.replaceAll("\\$", ""); // remove all $ chars
         String topic = (String) next.get("topic"); // pull out question topic
         String image = (String) next.get("image"); // pull out question image path
-//        String correct_choice = "";
-//        System.out.println("meta: " + meta);
-//        System.out.println("text: " + qText);
-//        System.out.println("topic: " + topic);
-//        System.out.println("img: " + image);
         
         List<Choice> listChoices = new ArrayList<Choice>();
         
@@ -81,70 +93,28 @@ public class FileParser {
           chc = chc.replaceAll("\\$", ""); // remove all $ chars
           Choice choice = new Choice(isCorrect, chc);
           listChoices.add(choice);
-//          System.out.println(isCorrect + " -- " + chc);
-//          if (isCorrect.toUpperCase().contentEquals("T")) {
-//            correct_choice = Integer.toString(count); // mark correct answer
-//          }
           count++;
         }
         Question q = new Question(topic, qText, listChoices, meta, image);
-        listQuestions.add(q);
-        
-      }
-      
+        listQuestions.add(q);       
+      }     
     } catch (Exception e) {
       e.printStackTrace();
     }
     return listQuestions;
   }
   
+  /**
+   * Adds Question objects to the QuizBank
+   * 
+   * @param listQuestions - list of Question objects to add to the QuizBank
+   * @return QuizBank with newly added Questions
+   */
   public QuizBank addQuestionsToQuizBank(List<Question> listQuestions) {
     QuizBank qb = new QuizBank();
     for (Question question : listQuestions) {
       qb.addQuestionToQuiz(question);
     }
     return qb;
-  }
-
-  // for testing only
-  public static void main(String[] args) {
-    FileParser fp = new FileParser("C:\\Users\\mterr\\Documents\\CS400\\test_input.json");
-    
-    try {
-      List<Question> listQuestions = fp.Parse();
-      QuizBank qb = fp.addQuestionsToQuizBank(listQuestions);
-      
-//      // get quizBank
-//      // get all questions from the QuizBank 
-//      HashMap<String, topicBucket> qTable;
-//      qTable = qb.getQuestions();
-//
-//      // get List of Questions for Topic 1 //
-//      topicBucket tB = qTable.get("hash table");
-//      List<Question> qList = tB.bucket;
-//      
-//      for (Question question : qList ) {
-//        System.out.println("Question = " + question.getQuestion());
-//        List<Choice> choices = question.getChoices();
-//        for (Choice choice : choices) {
-//          System.out.println("choice = " + choice.getChoice() + " -- " + choice.isCorrect);
-//        }
-//      }
-//      
-//      // get List of Questions for Topic 1 //
-//      tB = qTable.get("linux");
-//      qList = tB.bucket;
-//      
-//      for (Question question : qList ) {
-//        System.out.println("Question = " + question.getQuestion());
-//        List<Choice> choices = question.getChoices();
-//        for (Choice choice : choices) {
-//          System.out.println("choice = " + choice.getChoice() + " -- " + choice.isCorrect);
-//        }
-//      }
-      
-    } catch (Exception e) {
-      e.getMessage();
-    }
   }
 }
