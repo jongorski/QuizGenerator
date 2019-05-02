@@ -176,7 +176,7 @@ public class AskQuestion {
 		if (this.num_taken >= this.total_num) {
 			// DISPLAY FINAL WINDOWS OR CALL TO THAT CLASS, ETC
 			QuizComplete quizComplete = new QuizComplete();
-			this.curr_stage.setScene(quizComplete.QuizCompleteScene(curr_stage, num_correct, num_taken));
+			this.curr_stage.setScene(quizComplete.QuizCompleteScene(curr_stage, num_correct, num_taken, this.qb));
 		}
 	}
 
