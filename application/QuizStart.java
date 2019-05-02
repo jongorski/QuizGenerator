@@ -1,5 +1,8 @@
 package application;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -19,12 +22,35 @@ public class QuizStart {
 	
 	public QuizBank qb;
 	public Stage curr_stage;
+	public AddQuestionFormNode add_pop;
 	
-	public QuizStart(QuizBank quizbank, Stage stage) {
-		this.qb = quizbank;
+	/**
+	 * constructor method
+	 * @param stage: current stage of GUI
+	 */
+	public QuizStart(Stage stage) {
+		this.qb = new QuizBank();
+		List<Choice> choices1 = new ArrayList<Choice>();
+		choices1.add(new Choice("T", "Harrier"));
+		choices1.add(new Choice("F", "Lab"));
+		Question q1 = new Question("dogs", "What breed is this?", 
+				choices1, "such a cute dog", "../"
+						+ "harrier-puppy.jpg");
+		List<Choice> choices2 = new ArrayList<Choice>();
+		choices2.add(new Choice("T", "yah"));
+		Question q2 = new Question("sports", "sports?", 
+				choices2, "sports", "");
+		this.qb.addQuestionToQuiz(q1);
+		this.qb.addQuestionToQuiz(q2);
 		this.curr_stage = stage;
+		this.add_pop = new AddQuestionFormNode(this.qb);
 	}
 	
+	/**
+	 * handler method for start quiz button
+	 * @param topic: topic of quiz
+	 * @param n: number of questions to administer
+	 */
 	private void startHandler(String topic, int n) {
 		AskQuestion asker = new AskQuestion(this.curr_stage,
 			                                this.qb,
@@ -33,16 +59,27 @@ public class QuizStart {
 		asker.beginQuiz();
 	}
 	
+	/**
+	 * move to next scene
+	 * @param next: next scene
+	 */
 	private void moveOnHandler(Scene next) {
 		this.curr_stage.setScene(next);
 	}
 
-	private void addQuestionHandler() {
-		AddQuestionFormNode addQ = new AddQuestionFormNode(this.qb);
-		Stage addPop = addQ.AddQuestion();
-		addPop.show();
-		
+	/**
+	 * handler method for add question button
+	 */
+	private int addQuestionHandler() {
+		this.add_pop.AddQuestion().show();
+		return 0;
 	}
+	
+	private void swap() {
+		this.qb = this.add_pop.qb;
+		System.out.println(this.qb.topics);
+	}
+	
 	/*
 	 * Creates welcome scene for quiz users
 	 * 
@@ -69,7 +106,8 @@ public class QuizStart {
 		add_q.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				addQuestionHandler();
+				int j = addQuestionHandler();
+				swap();
 			}
 		});
 		VBox.setMargin(add_q, new Insets(0, 0, 30, 0));
@@ -95,6 +133,11 @@ public class QuizStart {
 		return scene;
 	}
 
+	/**
+	 * method to generate scene for add question or
+	 * start menu
+	 * @return scene to show 
+	 */
 	private Scene AddQuestionOrStart() {
 		VBox vbox = new VBox();
 		vbox.setAlignment(Pos.CENTER);
@@ -153,8 +196,13 @@ public class QuizStart {
 		return scene;
 	}
 	
-	public static void startQuiz(Stage curr_stage, QuizBank quizbank) {
-		QuizStart starter = new QuizStart(quizbank, curr_stage);
+	/**
+	 * static method to start quiz and call methods in
+	 * this class
+	 * @param curr_stage: current GUI stage
+	 */
+	public static void startQuiz(Stage curr_stage) {
+		QuizStart starter = new QuizStart(curr_stage);
 		curr_stage.setScene(starter.WelcomeScene());
 		curr_stage.show();
 	}
