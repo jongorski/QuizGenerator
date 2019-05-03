@@ -1,6 +1,26 @@
+///////////////////////////////////////////////////////////////////////////////
+//
+// Title: Quiz Generator
+// Course: CS400 Spring 2019
+// Project: Team Project
+//
+// Author: Mikel Terracina, Danielle Hart, Jon Gorski, Jack Wolf
+// Email: mterracina@wisc.edu, dahart2@wisc.edu, jongorski2@wisc.edu, jwolf22@wisc.edu
+//
+// Lecturer's Name: Andrew Kuemmel & Deb Deppler
+// Lecture Number: 004 & 001
+//
+// Due Date: 2019-05-02
+//
+///////////////////////////// CREDIT OUTSIDE HELP /////////////////////////////
+// Online Sources: none
+//
+/////////////////////////////// 80 COLUMNS WIDE ///////////////////////////////
 package application;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.MathContext;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -73,6 +93,9 @@ public class QuizComplete {
 		
 		//creating the "percent correct" line of text
 		double percCorrect = ((double)correct/(double)answered)*100;
+		BigDecimal bd = new BigDecimal(percCorrect);
+		bd = bd.round(new MathContext(4));
+		percCorrect = bd.doubleValue();
 		Label percCorrectLabel = new Label("Percent Correct: " + percCorrect + "%");
 		percCorrectLabel.setFont(Font.font("Verdana", 20));
 		VBox.setMargin(percCorrectLabel, new Insets(10, 0, 10, 0));
@@ -201,7 +224,7 @@ public class QuizComplete {
 		//setting up vbox and scene
 		VBox vBox = new VBox();
 		vBox.setAlignment(Pos.CENTER);
-		Scene goodbye_Scene = new Scene(vBox, 700,500);
+		Scene goodbye_Scene = new Scene(vBox,800,700);
 		
 		//creating goodbye text
 		Label goodbyeLabel = new Label("Goodbye!");

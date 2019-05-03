@@ -1,3 +1,22 @@
+
+///////////////////////////////////////////////////////////////////////////////
+//
+// Title: Quiz Generator
+// Course: CS400 Spring 2019
+// Project: Team Project
+//
+// Author: Mikel Terracina, Danielle Hart, Jon Gorski, Jack Wolf
+// Email: mterracina@wisc.edu, dahart2@wisc.edu, jongorski2@wisc.edu, jwolf22@wisc.edu
+//
+// Lecturer's Name: Andrew Kuemmel & Deb Deppler
+// Lecture Number: 004 & 001
+//
+// Due Date: 2019-05-02
+//
+///////////////////////////// CREDIT OUTSIDE HELP /////////////////////////////
+// Online Sources: none
+//
+/////////////////////////////// 80 COLUMNS WIDE ///////////////////////////////
 package application;
 
 import java.io.File;
@@ -11,6 +30,8 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -32,7 +53,6 @@ public class QuizStart {
 	
 	public QuizBank qb;
 	public Stage curr_stage;
-	//public AddQuestionFormNode add_pop;
 	
 	/**
 	 * constructor method
@@ -67,16 +87,22 @@ public class QuizStart {
 	 * passes control to AskQuestion
 	 */
 	private void startHandler(TextField json_path) { 
-		FileParser fp = new FileParser(json_path.getText());
-		try {
-			List<Question> questions_from_file = fp.Parse();
-			this.qb = fp.addQuestionsToQuizBank(questions_from_file);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+		if (!json_path.getText().contentEquals("")) {
+			FileParser fp = new FileParser(json_path.getText());
+			try {
+				List<Question> questions_from_file = fp.Parse();
+				this.qb = fp.addQuestionsToQuizBank(questions_from_file);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+			AskQuestion asker = new AskQuestion(this.qb, this.curr_stage);
+			this.curr_stage.setScene(asker.ChooseTopicStart());
 		}
-		AskQuestion asker = new AskQuestion(this.qb, this.curr_stage);
-		this.curr_stage.setScene(asker.ChooseTopicStart());
-		
+		else {
+			Alert empty_file = new Alert(AlertType.ERROR);
+			empty_file.setContentText("Please choose json file.\n");
+			empty_file.show();
+		}
 	}
 	
 	/*
