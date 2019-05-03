@@ -39,82 +39,83 @@ import org.json.simple.parser.*;
  */
 public class FileParser {
 
-  private String path; // path to JSON file
+	private String path; // path to JSON file
 
-  /*
-   * Constructor for FileParser class
-   * 
-   * path: String, path to parse
-   */
-  public FileParser(String path) {
-    this.path = path;
-  }
+	/*
+	 * Constructor for FileParser class
+	 * 
+	 * path: String, path to parse
+	 */
+	public FileParser(String path) {
+		this.path = path;
+	}
 
-  /*
-   * main method of this class parse this.path and set up Question objects
-   */
-  public List<Question> Parse() throws FileNotFoundException {
-    File f = new File(this.path);
-    if (f.isFile()) {
-      // okay, continue
-    } else {
-      throw new FileNotFoundException();
-    }
+	/*
+	 * main method of this class parse this.path and set up Question objects
+	 */
+	public List<Question> Parse() throws FileNotFoundException {
+		File f = new File(this.path);
+		if (f.isFile()) {
+			// okay, continue
+		} else {
+			throw new FileNotFoundException();
+		}
 
-    List<Question> listQuestions = new ArrayList<Question>();
-    
-    try {
-      // create a new JSON object and parse the JSON file
-      JSONParser parser = new JSONParser();
-      JSONObject json = (JSONObject) parser.parse(new FileReader(this.path));
+		List<Question> listQuestions = new ArrayList<Question>();
 
-      // get "questionArray" from json file
-      JSONArray question_arr = (JSONArray) json.get("questionArray");    
+		try {
+			// create a new JSON object and parse the JSON file
+			JSONParser parser = new JSONParser();
+			JSONObject json = (JSONObject) parser.parse(new FileReader(this.path));
 
-      // iterate over the questionArray, getting the meta-data, questionText, topic, and choiceArray
-      Iterator q_itr = question_arr.iterator();
-      while (q_itr.hasNext()) { // iterate through each question
-        Map next = (Map) q_itr.next();
-        String meta = (String) next.get("meta-data"); // pull out metadata
-        String qText = (String) next.get("questionText"); // pull out question text
-        qText = qText.replaceAll("\\$", ""); // remove all $ chars
-        String topic = (String) next.get("topic"); // pull out question topic
-        String image = (String) next.get("image"); // pull out question image path
-        
-        List<Choice> listChoices = new ArrayList<Choice>();
-        
-        // iterate over the choiceArray, getting choice and isCorrect fields
-        Iterator choice_itr = ((JSONArray) next.get("choiceArray")).iterator();
-        int count = 0;
-        while (choice_itr.hasNext()) { // iterate through each choice
-          Map next_choice = (Map) choice_itr.next();
-          String chc = (String) next_choice.get("choice");
-          String isCorrect = (String) next_choice.get("isCorrect");
-          chc = chc.replaceAll("\\$", ""); // remove all $ chars
-          Choice choice = new Choice(isCorrect, chc);
-          listChoices.add(choice);
-          count++;
-        }
-        Question q = new Question(topic, qText, listChoices, meta, image);
-        listQuestions.add(q);       
-      }     
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return listQuestions;
-  }
-  
-  /**
-   * Adds Question objects to the QuizBank
-   * 
-   * @param listQuestions - list of Question objects to add to the QuizBank
-   * @return QuizBank with newly added Questions
-   */
-  public QuizBank addQuestionsToQuizBank(List<Question> listQuestions) {
-    QuizBank qb = new QuizBank();
-    for (Question question : listQuestions) {
-      qb.addQuestionToQuiz(question);
-    }
-    return qb;
-  }
+			// get "questionArray" from json file
+			JSONArray question_arr = (JSONArray) json.get("questionArray");
+
+			// iterate over the questionArray, getting the meta-data, questionText, topic,
+			// and choiceArray
+			Iterator q_itr = question_arr.iterator();
+			while (q_itr.hasNext()) { // iterate through each question
+				Map next = (Map) q_itr.next();
+				String meta = (String) next.get("meta-data"); // pull out metadata
+				String qText = (String) next.get("questionText"); // pull out question text
+				qText = qText.replaceAll("\\$", ""); // remove all $ chars
+				String topic = (String) next.get("topic"); // pull out question topic
+				String image = (String) next.get("image"); // pull out question image path
+
+				List<Choice> listChoices = new ArrayList<Choice>();
+
+				// iterate over the choiceArray, getting choice and isCorrect fields
+				Iterator choice_itr = ((JSONArray) next.get("choiceArray")).iterator();
+				int count = 0;
+				while (choice_itr.hasNext()) { // iterate through each choice
+					Map next_choice = (Map) choice_itr.next();
+					String chc = (String) next_choice.get("choice");
+					String isCorrect = (String) next_choice.get("isCorrect");
+					chc = chc.replaceAll("\\$", ""); // remove all $ chars
+					Choice choice = new Choice(isCorrect, chc);
+					listChoices.add(choice);
+					count++;
+				}
+				Question q = new Question(topic, qText, listChoices, meta, image);
+				listQuestions.add(q);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return listQuestions;
+	}
+
+	/**
+	 * Adds Question objects to the QuizBank
+	 * 
+	 * @param listQuestions - list of Question objects to add to the QuizBank
+	 * @return QuizBank with newly added Questions
+	 */
+	public QuizBank addQuestionsToQuizBank(List<Question> listQuestions) {
+		QuizBank qb = new QuizBank();
+		for (Question question : listQuestions) {
+			qb.addQuestionToQuiz(question);
+		}
+		return qb;
+	}
 }
