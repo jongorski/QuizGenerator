@@ -50,7 +50,7 @@ public class QuizComplete {
 		//setting up the vbox and scene
 		VBox vBox = new VBox();
 		vBox.setAlignment(Pos.CENTER);
-		Scene quiz_Complete_Scene = new Scene(vBox, 700, 500);
+		Scene quiz_Complete_Scene = new Scene(vBox, 800, 700);
 		
 		//Creating the title of quiz complete page
 		Label title = new Label("Quiz Complete!");
