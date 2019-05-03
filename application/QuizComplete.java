@@ -258,6 +258,13 @@ public class QuizComplete {
 		return goodbye_Saved_Scene;
 	}
 	
+	/**
+	 * saves quiz's json file to computer
+	 * 
+	 * @param filename: string filename to save as
+	 * @param qb: quizbank to save
+	 * @return true on success, false on failure
+	 */
 	public static boolean saveFile(String filename, QuizBank qb) {
 		WriteFileJSON filewriter = new WriteFileJSON();
 		try {
