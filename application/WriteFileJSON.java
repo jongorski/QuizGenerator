@@ -3,6 +3,11 @@
 // Title:           WriteFileJSON
 // Course:          CS400 Spring 2019
 // Project:         Team Project 
+// Team Number:     90
+// Team Members:    Danielle Hart   -> dahart2.wisc.edu
+//                  Jack Wolf       -> jwolf22.wisc.edu
+//                  Jon Gorski      -> jgorski2.wisc.edu
+//                  Mikel Terracina -> mterracina@wisc.edu
 //
 // Author:          Mikel Terracina
 // Email:           mterracina@wisc.edu
@@ -17,6 +22,8 @@
 // https://javatutorial.net/java-iterate-hashmap-example
 // https://crunchify.com/how-to-write-json-object-to-file-in-java/
 // https://howtodoinjava.com/json/json-simple-read-write-json-examples/
+// https://www.geeksforgeeks.org/reverse-a-string-in-java/
+// https://www.geeksforgeeks.org/split-string-java-examples/
 // 
 /////////////////////////////// 80 COLUMNS WIDE ///////////////////////////////
 package application;
@@ -47,9 +54,14 @@ public class WriteFileJSON {
    * @throws IOException in the event an error occurs during write of the JSON file
    */
   public void writeFileFromQuizBank(String fileName, QuizBank qb)
-      throws IllegalNullFileException, IOException {
+      throws IllegalNullFileException, IllegalJSONFileException, IOException {
     if (fileName == null) {
       throw new IllegalNullFileException();
+    }
+
+    // throw this exception if user does not pass filename with valid .json extension
+    if (!isJSONFile(fileName)) {
+      throw new IllegalJSONFileException();
     }
 
     JSONObject j_quiz = new JSONObject();
@@ -108,5 +120,37 @@ public class WriteFileJSON {
     FileWriter file = new FileWriter(fileName);
     file.write(fileContents);
     file.flush();
+  }
+
+  /**
+   * Determines if the passed file name has a valid .json extension
+   * 
+   * @param fileName - name of the file to verify if it has a valid .json extension
+   * @return true if passed fileName is a valid .json extension, otherwise false
+   */
+  private boolean isJSONFile(String fileName) {
+
+    // build a string and then reverse its contents, in order to get the extension as the first part
+    // of the String
+    StringBuilder sb = new StringBuilder(fileName);
+    sb = sb.reverse();
+
+    // convert to String so we can perform String functions
+    String s = sb.toString();
+
+    // split the String on '.' (period)
+    String[] arrOfSb = s.split("\\.", 2); // '\\' have to add these escape characters
+
+    // rebuild the StringBuilder with the newly reversed String, then reverse it to get the file
+    // extension
+    sb = null;
+    sb = new StringBuilder(arrOfSb[0]);
+    sb = sb.reverse();
+
+    // if the file extension = json, return true
+    if (sb.toString().equalsIgnoreCase("json")) {
+      return true;
+    }
+    return false;
   }
 }

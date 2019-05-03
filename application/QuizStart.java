@@ -1,5 +1,6 @@
 package application;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +18,16 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+/**
+ * The quizstart class is called when the user chooses to start the quiz
+ * it passes control of the stage to QuizComplete when user is finished
+ * 
+ * @author jwolf
+ *
+ */
 public class QuizStart {
 	
 	public QuizBank qb;
@@ -80,19 +89,50 @@ public class QuizStart {
 		vbox.setAlignment(Pos.CENTER);
 		Scene scene = new Scene(vbox, 800, 600);
 
+		//Welcome text
+		Label welcomeLabel = new Label("Welcome to Quiz Generator!");
+		welcomeLabel.setFont(Font.font("Verdana", 40));
+		VBox.setMargin(welcomeLabel, new Insets(10, 0, 10, 0));
+		
+		//Instruction label
+		Label instructionLabel = new Label("Please choose your quiz file:");
+		instructionLabel.setFont(Font.font("Verdana", 16));
+		VBox.setMargin(instructionLabel, new Insets(10,0,10,0));
+		
 		// input path to json file
 		TextField input_json_path = new TextField();
+		input_json_path.setVisible(false);
 		input_json_path.setPromptText("Enter path to json");
 		input_json_path.setStyle("-fx-font-size:15");
-		input_json_path.setMinSize(300, 75);
-		input_json_path.setMaxSize(300, 75);
+		input_json_path.setMinSize(300, 50);  /*********changed height ******/
+		input_json_path.setMaxSize(300, 50);  /*********changed height ******/
 		VBox.setMargin(input_json_path, new Insets(20, 0, 40, 0));
 
+        // Mike code 
+        final FileChooser fileChooser = new FileChooser();
+        final Button openButton = new Button("Open File...");  // label at top
+        openButton.setStyle("-fx-font-size:15");
+        openButton.setMinSize(300, 90);
+        openButton.setPrefSize(300, 90);
+        openButton.setOnAction(
+            new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(final ActionEvent e) {
+                    File file = fileChooser.showOpenDialog(curr_stage);
+                    if (file != null) {
+                    	input_json_path.setVisible(true);
+                        input_json_path.setText(file.getAbsolutePath());
+                    }
+                }
+            });
+        VBox.setMargin(openButton, new Insets(0, 0, 30, 0));
+        /*******************************************************************/
+		
 		// Add Question button
 		Button next = new Button("Add Question");
 		next.setStyle("-fx-font-size:15");
-		next.setMinSize(300, 125);
-		next.setPrefSize(300, 125);
+		next.setMinSize(300, 90);  /*********changed height ******/
+		next.setPrefSize(300, 90); /*********changed height ******/
 		next.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
@@ -104,8 +144,8 @@ public class QuizStart {
 		// start quiz button
 		Button start = new Button("Start quiz!");
 		start.setStyle("-fx-font-size:15");
-		start.setMinSize(300, 125);
-		start.setPrefSize(300, 125);
+		start.setMinSize(300, 90); /*********changed height ******/
+		start.setPrefSize(300, 90); /*********changed height ******/
 		start.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
@@ -114,8 +154,10 @@ public class QuizStart {
 		});
 		VBox.setMargin(start, new Insets(0, 0, 30, 0));
 
+		vbox.getChildren().add(welcomeLabel);
+		vbox.getChildren().add(instructionLabel);
+	    vbox.getChildren().add(openButton); /**** mike added ****/
 		vbox.getChildren().add(input_json_path);
-		//vbox.getChildren().add(add_q);
 		vbox.getChildren().add(next);
 		vbox.getChildren().add(start);
 

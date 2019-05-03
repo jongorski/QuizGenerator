@@ -9,12 +9,21 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+/**
+ * Class for allowing user to enter new question(s)
+ * into the quizbank, and proceed to quiz
+ * 
+ * @author jwolf22
+ *
+ */
 public class AddQuestionFormNode {
 
 	public QuizBank qb;
@@ -26,6 +35,8 @@ public class AddQuestionFormNode {
 	public AddQuestionFormNode(QuizBank quizbank, Stage curr_stage) {
 		this.qb = quizbank;
 		this.stage = curr_stage;
+		this.stage.setTitle("Add questions");
+
 	}
 
 	/*
@@ -86,6 +97,16 @@ public class AddQuestionFormNode {
 		VBox leftPane = new VBox();
 		leftPane.setAlignment(Pos.CENTER);
 
+		//Required Label
+		Label req = new Label("[Fields marked with a (*) are required.]");
+		req.setFont(Font.font("Verdana", 15));
+		VBox.setMargin(req, new Insets(15, 0, 15, 0));
+		
+		//Topic label
+		Label topicLabel = new Label("*Enter topic:");
+		topicLabel.setFont(Font.font("Verdana", 14));
+		VBox.setMargin(topicLabel, new Insets(5,0,5,0));
+		
 		// Enter topic of new question
 		TextField topic = new TextField();
 		topic.setPromptText("Topic of new question");
@@ -93,6 +114,11 @@ public class AddQuestionFormNode {
 		topic.setMinSize(200, 100);
 		topic.setMaxSize(200, 100);
 		VBox.setMargin(topic, new Insets(0, 50, 40, 50));
+		
+		//Enter question text label
+		Label questionLabel = new Label("*Enter the question:");
+		questionLabel.setFont(Font.font("Verdana", 14));
+		VBox.setMargin(questionLabel, new Insets(5,0,5,0));
 
 		// Enter text of new question
 		TextArea text = new TextArea();
@@ -102,11 +128,19 @@ public class AddQuestionFormNode {
 		text.setMaxSize(250, 200);
 		VBox.setMargin(text, new Insets(0, 50, 40, 50));
 
+		leftPane.getChildren().add(req);
+		leftPane.getChildren().add(topicLabel);
 		leftPane.getChildren().add(topic);
+		leftPane.getChildren().add(questionLabel);
 		leftPane.getChildren().add(text);
 
 		VBox midPane = new VBox();
 		midPane.setAlignment(Pos.CENTER);
+		
+		//Choices Label
+		Label choicesLabel = new Label("*Enter answer options (up to 5):");
+		choicesLabel.setFont(Font.font("Verdana",14));
+		VBox.setMargin(choicesLabel, new Insets(5,0,5,0));
 
 		// Answer choice 1
 		TextField ans1 = new TextField();
@@ -146,6 +180,7 @@ public class AddQuestionFormNode {
 
 		TextField[] choices = new TextField[] { ans1, ans2, ans3, ans4, ans5 };
 
+		midPane.getChildren().add(choicesLabel);
 		midPane.getChildren().add(ans1);
 		midPane.getChildren().add(ans2);
 		midPane.getChildren().add(ans3);
@@ -154,6 +189,11 @@ public class AddQuestionFormNode {
 
 		VBox rightPane = new VBox();
 		rightPane.setAlignment(Pos.CENTER);
+		
+		//Correct answer label
+		Label corrAnsLabel = new Label("*Enter correct choice #:");
+		corrAnsLabel.setFont(Font.font("Verdana", 14));
+		VBox.setMargin(corrAnsLabel, new Insets(20, 0, 5, 40));
 
 		// Enter answer choice of new question
 		TextField ans_choice = new TextField();
@@ -161,7 +201,12 @@ public class AddQuestionFormNode {
 		ans_choice.setStyle("-fx-font-size:15");
 		ans_choice.setMinSize(130, 80);
 		ans_choice.setMaxSize(130, 80);
-		VBox.setMargin(ans_choice, new Insets(40, 40, 10, 40));
+		VBox.setMargin(ans_choice, new Insets(10, 40, 10, 40));
+		
+		//Image file label
+		Label imageLabel = new Label("Enter Image File:");
+		imageLabel.setFont(Font.font("Verdana", 14));
+		VBox.setMargin(imageLabel, new Insets(5, 40, 10, 40));
 
 		// Enter image file of new question
 		TextField img_file = new TextField();
@@ -169,7 +214,12 @@ public class AddQuestionFormNode {
 		img_file.setStyle("-fx-font-size:15");
 		img_file.setMinSize(130, 80);
 		img_file.setMaxSize(130, 80);
-		VBox.setMargin(img_file, new Insets(10, 40, 50, 40));
+		VBox.setMargin(img_file, new Insets(10, 40, 10, 40));
+		
+		//Metadata label
+		Label metaLabel = new Label("Enter Metadata:");
+		metaLabel.setFont(Font.font("Verdana", 14));
+		VBox.setMargin(metaLabel, new Insets(5, 15, 5, 40));
 
 		// Enter metadata of new question
 		TextField meta = new TextField();
@@ -177,7 +227,7 @@ public class AddQuestionFormNode {
 		meta.setStyle("-fx-font-size:15");
 		meta.setMinSize(130, 80);
 		meta.setMaxSize(130, 80);
-		VBox.setMargin(meta, new Insets(10, 40, 50, 40));
+		VBox.setMargin(meta, new Insets(10, 40, 10, 40));
 
 		/*
 		 * //Add another question button Button another = new
@@ -212,7 +262,7 @@ public class AddQuestionFormNode {
 				meta.clear();
 			}
 		});
-		VBox.setMargin(submit, new Insets(10, 25, 10, 25));
+		VBox.setMargin(submit, new Insets(5, 25, 10, 25));
 	
 		Button start = new Button("Start Quiz");
 		start.setStyle("-fx-font-size:15");
@@ -227,9 +277,11 @@ public class AddQuestionFormNode {
 		});
 		VBox.setMargin(start, new Insets(10, 25, 90, 25));
 		
-
+		rightPane.getChildren().add(corrAnsLabel);
 		rightPane.getChildren().add(ans_choice);
+		rightPane.getChildren().add(imageLabel);
 		rightPane.getChildren().add(img_file);
+		rightPane.getChildren().add(metaLabel);
 		rightPane.getChildren().add(meta);
 		// rightPane.getChildren().add(another);
 		rightPane.getChildren().add(submit);

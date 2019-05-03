@@ -1,10 +1,14 @@
 package application;
 
+import java.io.IOException;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -76,9 +80,8 @@ public class QuizComplete {
 		//creating the [Exit] Button
 		Button exitButton = new Button("Exit");
 		exitButton.setStyle("-fx-font-size:25");
-		exitButton.setMaxSize(200, 50);
-		exitButton.setMinSize(200, 50);
-		exitButton.setPrefSize(200, 50);
+		exitButton.setMaxSize(300, 125);
+		exitButton.setMinSize(300, 125);
 		VBox.setMargin(exitButton, new Insets(10, 0, 10, 0));
 		exitButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -90,10 +93,16 @@ public class QuizComplete {
 		//creating the [quiz again] Button
 		Button quizAgainButton = new Button("Take Another Quiz");
 		quizAgainButton.setStyle("-fx-font-size:25");
-		quizAgainButton.setMaxSize(250, 50);
-		quizAgainButton.setMinSize(250, 50);
-		quizAgainButton.setPrefSize(250, 50);
+		quizAgainButton.setMaxSize(300, 125);
+		quizAgainButton.setMinSize(300, 125);
 		VBox.setMargin(quizAgainButton, new Insets(10, 0, 10, 0));
+		quizAgainButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				Main newMain = new Main();
+				newMain.start(curr_stage);
+			}
+		});
 		
 		//adding things to the scene
 		vBox.getChildren().add(title);
@@ -124,11 +133,11 @@ public class QuizComplete {
 		//setting up the vbox and scene
 		VBox vBox = new VBox();
 		vBox.setAlignment(Pos.CENTER);
-		Scene exit_Scene = new Scene(vBox, 700, 500);
+		Scene exit_Scene = new Scene(vBox, 800, 700);
 		
 		//Creating the save instruction label
-		Label saveLabel = new Label("Save all questions to new file:");
-		saveLabel.setFont(Font.font("Verdana", 30));
+		Label saveLabel = new Label("Save all questions to new file (include \".json\" at the end of your file name):");
+		saveLabel.setFont(Font.font("Verdana", 14));
 		
 		//creating the text box where the user types in the name of the
 		//new file they want to create and save
@@ -140,9 +149,8 @@ public class QuizComplete {
 		//creating the [save] button
 		Button saveButton = new Button("Save");
 		saveButton.setFont(Font.font("Verdana", 20));
-		saveButton.setMinSize(200,50);
-		saveButton.setMaxSize(200, 50);
-		saveButton.setPrefSize(200, 50);
+		saveButton.setMinSize(300, 125);
+		saveButton.setMaxSize(300, 125);
 		VBox.setMargin(saveButton, new Insets(10,0,10,0));
 		//when button is pressed, it saves a file using the text typed in by the user
 		saveButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -153,6 +161,11 @@ public class QuizComplete {
 					if (saved) {
 						curr_stage.setScene(goodbyeSavedScene());
 					}
+					else {
+						Alert a = new Alert(AlertType.ERROR);
+						a.setContentText("Please enter valid file name & make sure to end with \".json\"");
+						a.show();
+					}
 				}
 			}
 		});
@@ -160,9 +173,8 @@ public class QuizComplete {
 		//creating the [exit without saving] button
 		Button exitW = new Button("Exit Without Saving");
 		exitW.setFont(Font.font("Verdana", 20));
-		exitW.setMinSize(400,50);
-		exitW.setMaxSize(400, 50);
-		exitW.setPrefSize(400, 50);
+		exitW.setMinSize(300, 125);
+		exitW.setMaxSize(300, 125);
 		VBox.setMargin(exitW, new Insets(100,0,10,0));
 		exitW.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -224,9 +236,21 @@ public class QuizComplete {
 	}
 	
 	public static boolean saveFile(String filename, QuizBank qb) {
+		WriteFileJSON filewriter = new WriteFileJSON();
+		try {
+			filewriter.writeFileFromQuizBank(filename, qb);
+		} catch (IllegalNullFileException e) {
+			e.printStackTrace();
+			return false;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+			
+		} catch (IllegalJSONFileException e) {
+			e.printStackTrace();
+			return false;
+		}
 		
-		//if file saved return true
-		//else return false
 		return true;
 		
 	}
