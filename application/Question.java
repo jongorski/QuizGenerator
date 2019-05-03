@@ -30,11 +30,10 @@ public class Question implements QuestionADT {
 
   // ************************** FIELDS ******************************************//
   private String metadata; // miscellaneous information about the question
-  private String question;
+  public String question;
   private String topic;
   private String image;
   private List<Choice> choices;
-  private String answer;
   public boolean asked;
 
   // ************************** CONSTRUCTORS **************************************//
