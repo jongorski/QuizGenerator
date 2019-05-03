@@ -101,7 +101,7 @@ public class QuizComplete {
 		VBox.setMargin(percCorrectLabel, new Insets(10, 0, 10, 0));
 		
 		//creating the [Exit] Button
-		Button exitButton = new Button("Exit");
+		Button exitButton = new Button("Save File or Exit");
 		exitButton.setStyle("-fx-font-size:25");
 		exitButton.setMaxSize(300, 125);
 		exitButton.setMinSize(300, 125);
